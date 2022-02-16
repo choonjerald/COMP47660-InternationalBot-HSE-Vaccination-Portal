@@ -9,16 +9,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.*;
-import javax.validation.groups.Default;
-import java.util.List;
-import java.util.Set;
-
 @Controller
 public class UserController {
-//    ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-//    Validator validator = factory.getValidator();
-
     @Autowired
     UserRepository userRepository;
 
