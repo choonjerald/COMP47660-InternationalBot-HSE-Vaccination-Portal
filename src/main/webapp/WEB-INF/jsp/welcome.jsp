@@ -7,38 +7,15 @@
 </head>
 <body>
 <center>
-    <h1>Books Management</h1>
+    <h1>Register an Account</h1>
     <h2>
-        <a href="/new">Add New Book</a>
-        &nbsp;&nbsp;&nbsp;
-        <a href="/">List All Books</a>
+        <a href="/new">Create Account</a>
+    </h2>
 
+    <h1>Login to Existing Account</h1>
+    <h2>
+        <a href="/login"> Login</a>
     </h2>
 </center>
-<div align="center">
-    <table border="1" cellpadding="5">
-        <caption><h2>List of Books</h2></caption>
-        <tr>
-            <th>ID</th>
-            <th>Title</th>
-
-            <th>ISBN</th>
-            <th>Actions</th>
-        </tr>
-        <c:forEach var="book" items="${listBooks}">
-            <tr>
-                <td><c:out value="${book.id}" /></td>
-                <td><c:out value="${book.book_name}" /></td>
-
-                <td><c:out value="${book.isbn}" /></td>
-                <td>
-                    <a href="/books/${book.id}"/>Edit</a>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <a href="/delete/${book.id}"  />Delete</a>
-                </td>
-            </tr>
-        </c:forEach>
-    </table>
-</div>
 </body>
 </html>
