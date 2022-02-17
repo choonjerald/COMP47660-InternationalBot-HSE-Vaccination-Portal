@@ -2,68 +2,67 @@ package org.example.model;
 
 import org.example.constraint.CheckAge;
 
-import javax.persistence.Id;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.GroupSequence;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.groups.Default;
-import java.util.Date;
+import java.util.Collection;
 
 @Entity
-@Table(name = "users")
+@Table(name = "users", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 public class User {
-    public interface Extended{}
-
-    @GroupSequence({Default.class, Extended.class})
-    public interface MySequence {}
-
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotBlank(message = "Name is required")
-    private String name;
+//    @NotBlank(message = "First Name is required")
+    private String firstName;
 
-    @NotBlank(message = "Surname is required")
+//    @NotBlank(message = "Surname is required")
     private String surname;
 
-    @NotEmpty(message = "Date of Birth is required")
-    @CheckAge(groups=Extended.class)
+//    @NotEmpty(message = "Date of Birth is required")
+//    @CheckAge(groups=Extended.class)
     private String DOB;
 
-    @NotBlank(message = "PPS number is required")
-    @Pattern(regexp = "^\\d{7}.{1,2}$" ,message = "A PPS Number is always 7 numbers followed by either one or 2 letters", groups=Extended.class)
+//    @NotBlank(message = "PPS number is required")
+//    @Pattern(regexp = "^\\d{7}.{1,2}$" ,message = "A PPS Number is always 7 numbers followed by either one or 2 letters", groups=Extended.class)
     private String PPS;
 
-    @NotBlank(message = "Address is required")
+//    @NotBlank(message = "Address is required")
     private String address;
 
-    @NotBlank(message = "Phone number is required")
-    @Pattern(regexp = "^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$", message = "Use a valid phone number", groups=Extended.class)
+//    @NotBlank(message = "Phone number is required")
+//    @Pattern(regexp = "^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$", message = "Use a valid phone number", groups=Extended.class)
     private String phone;
 
-    @NotBlank(message = "Email is required")
-    @Pattern(regexp = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])", message = "Use a Valid Email Address", groups=Extended.class)
+//    @NotBlank(message = "Email is required")
+//    @Pattern(regexp = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])", message = "Use a Valid Email Address", groups=Extended.class)
     private String email;
 
-    @NotBlank(message = "Nationality is required")
+//    @NotBlank(message = "Nationality is required")
     private String nationality;
 
+//    @NotBlank(message = "password is required")
+    private String password;
 
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "users_roles",
+            joinColumns = @JoinColumn(
+                    name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(
+                    name = "role_id", referencedColumnName = "id"))
 
-    public User(){
+    private Collection< Role > roles;
+
+    public User(){ }
+
+    public User(String firstName, String surname, String DOB, String PPS, String address, String phone, String email, String nationality, String password, Collection < Role > roles) {
         super();
-    }
-
-    public User(Long id, String name, String surname, String DOB, String PPS, String address, String phone, String email, String nationality) {
-        super();
-        this.id = id;
-        this.name = name;
+        this.firstName = firstName;
         this.surname = surname;
         this.DOB = DOB;
         this.PPS = PPS;
@@ -71,6 +70,8 @@ public class User {
         this.phone = phone;
         this.email = email;
         this.nationality = nationality;
+        this.password = password;
+        this.roles = roles;
     }
 
 
@@ -81,11 +82,12 @@ public class User {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
-    public void setName(String name) {
-        this.name = name;
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public String getSurname() {
@@ -142,5 +144,20 @@ public class User {
 
     public void setNationality(String nationality) {
         this.nationality = nationality;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Collection < Role > getRoles() {
+        return roles;
+    }
+    public void setRoles(Collection < Role > roles) {
+        this.roles = roles;
     }
 }

@@ -6,7 +6,7 @@
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <html>
 <head>
-    <title>HSE Vaccination Register</title>
+    <title>HSE Vaccination Account Registration</title>
 </head>
 <style>
     .error {
@@ -16,19 +16,20 @@
 </style>
 <body>
 <div class="container">
-    <h2> Create an Account: </h2>
+    <h1> Create an Account</h1>
+    <h2> Enter your details: </h2>
     <div class="card">
         <div class="card-body">
-            <sf:form action="newAcc" modelAttribute="user" method="post">
+            <sf:form action="/registration" modelAttribute="user" method="post">
                 <div class="form-group row">
-                    <label for="name" class="col-sm-2 col-form-label">Name: </label>
+                    <label for="firstName" class="col-sm-2 col-form-label">First Name: </label>
                     <div class="col-sm-5">
-                        <input type="text" name="name" size="45"
-                               value="<c:out value='${user.name}' />"
+                        <input type="text" name="firstName" size="45"
+                               value="<c:out value='${user.firstName}' />"
                         />
                     </div>
                     <div class="col">
-                        <sf:errors path="name" cssClass="error"/>
+                        <sf:errors path="firstName" cssClass="error"/>
                     </div>
                 </div>
 
@@ -305,6 +306,17 @@
                     </div>
                     <div class="col">
                         <sf:errors path="nationality" cssClass="error"/>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="password" class="col-sm-2 col-form-label">Password:</label>
+                    <div class="col-sm-5">
+                        <input type="text" name="password" size="45"
+                               value="<c:out value='${user.password}' />"
+                        />
+                    </div>
+                    <div class="col">
+                        <sf:errors path="password" cssClass="error"/>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>

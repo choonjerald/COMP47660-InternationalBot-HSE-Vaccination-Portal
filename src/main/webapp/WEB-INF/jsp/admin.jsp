@@ -7,7 +7,7 @@
 </head>
 <body>
 <center>
-    <h1>You are logged in as <c:out value="${user.firstName}" />!</h1>
+    <h1>You are logged in as an ADMIN!</h1>
 </center>
 </body>
 </html>

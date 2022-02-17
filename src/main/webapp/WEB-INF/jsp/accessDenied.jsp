@@ -3,11 +3,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-    <title>Home</title>
+    <title>Access Denied</title>
 </head>
 <body>
-<center>
-    <h1>You are logged in as <c:out value="${user.firstName}" />!</h1>
-</center>
+<h2>Sorry, you do not have permission to view this page.</h2>
+
+Click <a href="<c:url value="/" /> ">here</a>
+to go back to the Homepage.
 </body>
 </html>

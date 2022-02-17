@@ -1,45 +1,36 @@
 package org.example.controller;
 
+import org.example.exception.EmailNotFoundException;
 import org.example.model.User;
 import org.example.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
 
 @Controller
 public class UserController {
     @Autowired
     UserRepository userRepository;
 
-    @RequestMapping({"/"})
-    public String viewWelcome(Model model){
-        return "welcome";
-    }
+    @RequestMapping({"/user/home"})
+    public String viewHomePage(Model model) throws EmailNotFoundException {
 
-    @RequestMapping({"/home"})
-    public String viewHomePage(Model model){
-        return "home";
-    }
+        // Get the principal of logged in user
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-    // Create a User Account
-    @RequestMapping("/new")
-    public String createUser(){
-        return "register";
-    }
-
-    // Save Created Account
-    @PostMapping("/newAcc")
-    public String saveCreatedUser(@Validated(User.MySequence.class) @ModelAttribute("user") User user, BindingResult result, Model model){
-
-        if (result.hasErrors()) {
-            return createUser();
+        if (principal instanceof UserDetails) {
+            String userEmail = ((UserDetails)principal).getUsername();
+            User user = userRepository.findByEmail(userEmail);
+            model.addAttribute("user", user);
+        } else {
+            String userEmail = principal.toString();
         }
 
-        userRepository.save(user);
-        return viewHomePage(model);
+        return "home";
     }
 
 }

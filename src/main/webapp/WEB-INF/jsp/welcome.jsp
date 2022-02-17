@@ -20,7 +20,7 @@
             </div>
             <div class="d-flex justify-content-center">
                 <h2>
-                    <a href="/new" class="btn btn-primary">Create Account</a>
+                    <a href="/registration" class="btn btn-primary">Create Account</a>
                 </h2>
             </div>
         </div>
