@@ -39,17 +39,59 @@ public class AppointmentController {
     VaccinationCentreRepository vaccinationCentreRepository;
 
     @RequestMapping({"/selectVaccinationCentre"})
-    public String selectVaccinationCentre(Model model) {
-        List<VaccinationCentre> listVaccinationCentres = vaccinationCentreRepository.findAll();
-        model.addAttribute("listVaccinationCentres", listVaccinationCentres);
-        return "selectVaccinationCentre";
+    public String selectVaccinationCentre(Model model) throws EmailNotFoundException {
+        // Get the role of logged in user
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String role = auth.getAuthorities().toString();
+
+        String target = "welcome";
+        if(role.contains("USER")) {
+            // Get the principal of logged in user
+            Object principal = auth.getPrincipal();
+
+            if (principal instanceof UserDetails) {
+                String userEmail = ((UserDetails)principal).getUsername();
+                User user = userRepository.findByEmail(userEmail);
+
+                if(user.getAppointments().isEmpty()){
+                    List<VaccinationCentre> listVaccinationCentres = vaccinationCentreRepository.findAll();
+                    model.addAttribute("listVaccinationCentres", listVaccinationCentres);
+                    target = "selectVaccinationCentre";
+                } else target = "redirect:/";
+
+            } else {
+                String userEmail = principal.toString();
+            }
+        }
+        return target;
     }
 
     @RequestMapping("/selectAppointmentTime/{id}")
-    public String selectAppointmentTime(@PathVariable(value = "id") Long vaccinationCentreId, Model model) throws AppointmentNotFoundException{
-        List<Appointment> listAppointments = appointmentRepository.findAvailableByVaccinationCentre(vaccinationCentreId);
-        model.addAttribute("listAppointments", listAppointments);
-        return "selectAppointmentTime";
+    public String selectAppointmentTime(@PathVariable(value = "id") Long vaccinationCentreId, Model model) throws AppointmentNotFoundException, EmailNotFoundException {
+        // Get the role of logged in user
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String role = auth.getAuthorities().toString();
+
+        String target = "welcome";
+        if(role.contains("USER")) {
+            // Get the principal of logged in user
+            Object principal = auth.getPrincipal();
+
+            if (principal instanceof UserDetails) {
+                String userEmail = ((UserDetails)principal).getUsername();
+                User user = userRepository.findByEmail(userEmail);
+
+                if(user.getAppointments().isEmpty()){
+                    List<Appointment> listAppointments = appointmentRepository.findAvailableByVaccinationCentre(vaccinationCentreId);
+                    model.addAttribute("listAppointments", listAppointments);
+                    target = "selectAppointmentTime";
+                } else target = "redirect:/";
+
+            } else {
+                String userEmail = principal.toString();
+            }
+        }
+        return target;
     }
 
     @RequestMapping("/bookAppointment/{id}")
@@ -70,20 +112,19 @@ public class AppointmentController {
 
                 Appointment appointment = appointmentRepository.findById(appointmentId)
                         .orElseThrow(() -> new AppointmentNotFoundException());
-                if(!appointment.isBooked()){
+                if(!appointment.isBooked() && user.getAppointments().isEmpty()){
                     appointment.setBooked(true);
                     appointment.setUser(user);
-                    appointmentRepository.saveAndFlush(appointment);
+                    appointmentRepository.save(appointment);
                 }
 
                 model.addAttribute("user", user);
             } else {
                 String userEmail = principal.toString();
             }
-            target = "home";
+            target = "redirect:/";
 
         }
-
         return target;
     }
 
