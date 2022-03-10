@@ -12,11 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 
 @Controller
+@RequestMapping("/admin")
 public class AdminController {
     @Autowired
     AppointmentRepository appointmentRepository;
 
-    @RequestMapping({"/admin/home"})
+    @RequestMapping({"/home"})
     public String viewHomePage(Model model){
         // Get the role of logged in user
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();

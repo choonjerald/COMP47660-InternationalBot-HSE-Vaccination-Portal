@@ -16,6 +16,7 @@ import java.util.List;
 
 
 @Controller
+@RequestMapping("/user")
 public class UserController {
     @Autowired
     UserRepository userRepository;
@@ -23,7 +24,7 @@ public class UserController {
     @Autowired
     AppointmentRepository appointmentRepository;
 
-    @RequestMapping({"/user/home"})
+    @RequestMapping({"/home"})
     public String viewHomePage(Model model) throws EmailNotFoundException {
 
         // Get the principal of logged in user
