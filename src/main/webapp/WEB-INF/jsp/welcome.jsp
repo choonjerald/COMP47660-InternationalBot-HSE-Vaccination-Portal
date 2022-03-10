@@ -28,6 +28,34 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <h1>Aggregated statistics</h1>
+        </div>
+
+        <div class="row">
+            <div class="column mr-5 ">
+                <h2>Highest Vaccined Nationality</h2>
+                <h3><c:out value="${mostCommonNationality}" /></h3>
+            </div>
+
+            <div class="column mr-5 ">
+                <h2>Highest Vaccined Age group</h2>
+                <h3><c:out value="${mostCommonAgeGroup}" /></h3>
+            </div>
+
+            <div class="column mr-5 ">
+                <h2>Registered Males</h2>
+                <h3><c:out value="${registeredMales}" /></h3>
+            </div>
+
+<%--            can fill db with initial female data to not through out of bound error--%>
+<%--            <div class="column mr-5 ">--%>
+<%--                <h2>Registered Females</h2>--%>
+<%--                <h3><c:out value="${registeredFemales}" /></h3>--%>
+<%--            </div>--%>
+
+        </div>
+
     </div>
 </div>
 

@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User save(UserRegistrationDto registrationDto) throws UserAlreadyExistException {
         User user = new User(registrationDto.getFirstName(),
-                registrationDto.getSurname(), registrationDto.getDOB(), registrationDto.getPPS(), registrationDto.getAddress(), registrationDto.getPhone(), registrationDto.getEmail(), registrationDto.getNationality(),
+                registrationDto.getSurname(), registrationDto.getDOB(), registrationDto.getAgeGroup(), registrationDto.getSex(), registrationDto.getPPS(), registrationDto.getAddress(), registrationDto.getPhone(), registrationDto.getEmail(), registrationDto.getNationality(),
                 passwordEncoder.encode(registrationDto.getPassword()), Arrays.asList(new Role("USER")));
 
         //Let's check if user already registered with us, if not proceed with saving new user

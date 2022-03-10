@@ -58,6 +58,20 @@
                 </div>
 
                 <div class="form-group row">
+                    <label for="sex" class="col-sm-2 col-form-label">Sex: </label>
+                    <div class="col-sm-5">
+                        <select name="sex" path="sex">
+                            <option value="">-- select one --</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <sf:errors path="sex" cssClass="error"/>
+                    </div>
+                </div>
+
+                <div class="form-group row">
                     <label for="PPS" class="col-sm-2 col-form-label">PPS Number: </label>
                     <div class="col-sm-5">
                         <input type="text" name="PPS" size="45"

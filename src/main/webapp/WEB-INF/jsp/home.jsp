@@ -16,10 +16,8 @@
 
             <div id="navbarSupportedContent" class="collapse navbar-collapse">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active"><a href="#" class="nav-link text-uppercase font-weight-bold">Home <span class="sr-only">(current)</span></a></li>
-                    <li class="nav-item"><a href="#" class="nav-link text-uppercase font-weight-bold">About</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link text-uppercase font-weight-bold">Gallery</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link text-uppercase font-weight-bold">Portfolio</a></li>
+                    <li class="nav-item active"><a href="#" class="nav-link text-uppercase font-weight-bold">Home<span class="sr-only">(current)</span></a></li>
+                    <li class="nav-item"><a href="/selectVaccinationCentre/" class="nav-link text-uppercase font-weight-bold">Book Appointment</a></li>
                     <li class="nav-item"><a href="/logout" class="nav-link text-uppercase font-weight-bold">Logout</a></li>
                 </ul>
             </div>
@@ -32,15 +30,52 @@
     <div class="pt-5 text-white">
         <header class="py-5 mt-5">
             <h1 class = "display-4">You are logged in as <c:out value="${user.firstName}" />!</h1>
-            <p class="lead mb-0">Using Bootstrap 4 and Javascript, create a transparent navbar which changes its style on scroll.</p>
         </header>
         <div class="py-5">
-            <p class="lead">Lorem ipsum dolor sit amet, <strong class="font-weight-bold">consectetur adipisicing </strong>elit. Explicabo consectetur odio voluptatum facere animi temporibus, distinctio tempore enim corporis quam <strong class="font-weight-bold">recusandae </strong>placeat! Voluptatum voluptate, ex modi illum quas nam distinctio.</p>
-            <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            <a href="/selectVaccinationCentre/" class="btn btn-light btn-lg action-button">Book an Appointment<i class="fa fa-long-arrow-right ml-2"></i></a>
         </div>
-        <div class="py-5">
-            <p class="lead">Lorem ipsum dolor sit amet, <strong class="font-weight-bold">consectetur adipisicing </strong>elit. Explicabo consectetur odio voluptatum facere animi temporibus, distinctio tempore enim corporis quam <strong class="font-weight-bold">recusandae </strong>placeat! Voluptatum voluptate, ex modi illum quas nam distinctio.</p>
-            <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <h3>Your Booked Appointments</h3>
+        <div class="card">
+            <div class="card-body">
+                <table class="center">
+                    <tr>
+                        <th>Vaccination Centre </th>
+                        <th>Date </th>
+                        <th>Time </th>
+                        <th>Type </th>
+                        <th></th>
+                    </tr>
+                    <c:forEach var="appointment" items="${user.appointments}">
+                        <tr>
+                            <td><c:out value="${appointment.vaccinationCentre.name} " /></td>
+                            <td><c:out value="${appointment.date} " /></td>
+                            <td><c:out value="${appointment.time} " /></td>
+                            <td><c:out value="${appointment.appointmentType} " /></td>
+                            <td>
+                                <a href="/cancelAppointment/${appointment.id}"/>Cancel</a>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </table>
+            </div>
+        </div>
+        <br>
+        <h3>Your Activity Log</h3>
+        <div class="card">
+            <div class="card-body">
+                <table class="center">
+                    <tr>
+                        <th>Time </th>
+                        <th>Activity </th>
+                    </tr>
+                    <c:forEach var="activity" items="${user.userActivities}">
+                        <tr>
+                            <td><c:out value="${activity.dateAndTime} " /></td>
+                            <td><c:out value="${activity.message} " /></td>
+                        </tr>
+                    </c:forEach>
+                </table>
+            </div>
         </div>
     </div>
 </div>

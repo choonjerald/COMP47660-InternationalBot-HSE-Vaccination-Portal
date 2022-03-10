@@ -7,6 +7,12 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.groups.Default;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.ZoneId;
+import java.util.Date;
 
 public class UserRegistrationDto {
     public interface Extended{}
@@ -23,6 +29,11 @@ public class UserRegistrationDto {
     @NotEmpty(message = "Date of Birth is required")
     @CheckAge(groups= Extended.class)
     private String DOB;
+
+    private String ageGroup;
+
+    @NotEmpty(message = "Sex is required")
+    private String sex;
 
     @NotBlank(message = "PPS number is required")
     @Pattern(regexp = "^\\d{7}.{1,2}$" ,message = "A PPS Number is always 7 numbers followed by either one or 2 letters", groups= Extended.class)
@@ -49,11 +60,13 @@ public class UserRegistrationDto {
 
     }
 
-    public UserRegistrationDto(String firstName, String surname, String DOB, String PPS, String address, String phone, String email, String nationality, String password) {
+    public UserRegistrationDto(String firstName, String surname, String DOB, String ageGroup, String sex, String PPS, String address, String phone, String email, String nationality, String password) {
         super();
         this.firstName = firstName;
         this.surname = surname;
         this.DOB = DOB;
+        this.ageGroup = ageGroup;
+        this.sex = sex;
         this.PPS = PPS;
         this.address = address;
         this.phone = phone;
@@ -84,6 +97,35 @@ public class UserRegistrationDto {
 
     public void setDOB(String DOB) {
         this.DOB = DOB;
+    }
+
+    public String getAgeGroup() {
+        Date birthdate = null;
+        try {
+            birthdate = new SimpleDateFormat("yyyy-MM-dd").parse(DOB);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        LocalDate today = LocalDate.now();
+        Period age = Period.between(birthdate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), today);
+        if (age.getYears() >= 18 && age.getYears() <= 25) {setAgeGroup("18 - 25");}
+        else if (age.getYears() >= 26 && age.getYears() <= 35) {setAgeGroup("26 - 35");}
+        else if (age.getYears() >= 36 && age.getYears() <= 45) {setAgeGroup("36 - 45");}
+        else if (age.getYears() >= 46 && age.getYears() <= 55) {setAgeGroup("46 - 55");}
+        else if (age.getYears() >= 56 && age.getYears() <= 65) {setAgeGroup("56 - 65");}
+        else {setAgeGroup("Over 66");}
+
+        return ageGroup;
+    }
+
+    public void setAgeGroup(String ageGroup) {
+        this.ageGroup = ageGroup;
+    }
+
+    public String getSex() { return sex; }
+
+    public void setSex(String sex) {
+        this.sex = sex;
     }
 
     public String getPPS() {

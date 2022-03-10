@@ -1,8 +1,11 @@
 package org.example.controller;
 
 import org.example.dto.UserRegistrationDto;
+import org.example.exception.EmailNotFoundException;
 import org.example.exception.UserAlreadyExistException;
 import org.example.model.User;
+import org.example.model.UserActivity;
+import org.example.repository.UserActivityRepository;
 import org.example.repository.UserRepository;
 import org.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +17,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.time.LocalDateTime;
+
 @Controller
 @RequestMapping("/registration")
 public class RegistrationController {
@@ -22,6 +27,9 @@ public class RegistrationController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private UserActivityRepository userActivityRepository;
 
     public RegistrationController(UserService userService) {
         super();
@@ -46,7 +54,10 @@ public class RegistrationController {
         }
         try {
             userService.save(registrationDto);
-        }catch (UserAlreadyExistException e){
+
+            String activityMessage = "Account created.";
+            userActivityRepository.save(new UserActivity(LocalDateTime.now(), activityMessage, userRepository.findByEmail(registrationDto.getEmail())));
+        }catch (UserAlreadyExistException | EmailNotFoundException e){
             result.rejectValue("email", "userData.email","An account already exists for this email.");
             return showRegistrationForm();
         }
