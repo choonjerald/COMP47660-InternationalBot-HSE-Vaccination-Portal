@@ -12,11 +12,12 @@ import org.springframework.web.bind.annotation.*;
 
 
 @Controller
+@RequestMapping("/user")
 public class UserController {
     @Autowired
     UserRepository userRepository;
 
-    @RequestMapping({"/user/home"})
+    @RequestMapping({"/home"})
     public String viewHomePage(Model model) throws EmailNotFoundException {
 
         // Get the principal of logged in user
