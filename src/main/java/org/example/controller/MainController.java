@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.ui.Model;
 
+import java.util.List;
+
 @Controller
 public class MainController {
 
@@ -50,6 +52,18 @@ public class MainController {
     @RequestMapping({"/accessDenied"})
     public String accessDenied() {
         return "accessDenied";
+    }
+
+    @GetMapping("/")
+    public String getAggregatedData(Model model) throws EmailNotFoundException {
+        List<User> userList = userRepository.findAll();
+        model.addAttribute("userList", userList);
+        model.addAttribute("mostCommonNationality", userRepository.getMostCommonNationality().get(0).split(",")[0]);
+        model.addAttribute("mostCommonAgeGroup", userRepository.getMostCommonAgeGroup().get(0).split(",")[0]);
+        model.addAttribute("registeredMales", userRepository.getGenderCounts().get(0).split(",")[1]);
+//        model.addAttribute("registeredFemales", userRepository.getGenderCounts().get(1).split(",")[1]);
+
+        return viewWelcome(model);
     }
 
 }

@@ -23,6 +23,7 @@ public class DbInit {
         admin.setFirstName("Admin");
         admin.setSurname("Admin");
         admin.setEmail("admin@HSE.com");
+        admin.setSex("male");
         admin.setAddress("admin");
         admin.setDOB("1999-03-08");
         admin.setNationality("Malaysian");
