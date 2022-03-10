@@ -1,7 +1,9 @@
 package org.example.controller;
 
 import org.example.exception.EmailNotFoundException;
+import org.example.model.Appointment;
 import org.example.model.User;
+import org.example.repository.AppointmentRepository;
 import org.example.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -13,11 +15,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.ui.Model;
 
+import java.util.List;
+
 @Controller
 public class MainController {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    AppointmentRepository appointmentRepository;
 
     @RequestMapping({"/"})
     public String viewWelcome(Model model) throws EmailNotFoundException {

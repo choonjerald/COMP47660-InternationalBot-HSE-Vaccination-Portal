@@ -9,6 +9,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.groups.Default;
 import java.util.Collection;
+import java.util.Set;
 
 @Entity
 @Table(name = "users", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
@@ -57,6 +58,9 @@ public class User {
                     name = "role_id", referencedColumnName = "id"))
 
     private Collection< Role > roles;
+
+    @OneToMany(mappedBy ="user", cascade = CascadeType.ALL)
+    Set<Appointment> appointments;
 
     public User(){ }
 
@@ -159,5 +163,13 @@ public class User {
     }
     public void setRoles(Collection < Role > roles) {
         this.roles = roles;
+    }
+
+    public Collection<Appointment> getAppointments() {
+        return appointments;
+    }
+
+    public void setAppointments(Set<Appointment> appointments) {
+        this.appointments = appointments;
     }
 }

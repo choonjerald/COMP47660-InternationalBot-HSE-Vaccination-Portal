@@ -1,7 +1,9 @@
 package org.example.controller;
 
 import org.example.exception.EmailNotFoundException;
+import org.example.model.Appointment;
 import org.example.model.User;
+import org.example.repository.AppointmentRepository;
 import org.example.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -10,11 +12,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @Controller
 public class UserController {
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    AppointmentRepository appointmentRepository;
 
     @RequestMapping({"/user/home"})
     public String viewHomePage(Model model) throws EmailNotFoundException {
