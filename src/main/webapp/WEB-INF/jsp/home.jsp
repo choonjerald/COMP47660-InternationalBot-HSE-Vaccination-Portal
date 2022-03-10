@@ -42,12 +42,16 @@
                         <th>Vaccination Centre </th>
                         <th>Date </th>
                         <th>Time </th>
+                        <th></th>
                     </tr>
                     <c:forEach var="appointment" items="${user.appointments}">
                         <tr>
                             <td><c:out value="${appointment.vaccinationCentre.name} " /></td>
                             <td><c:out value="${appointment.date} " /></td>
                             <td><c:out value="${appointment.time} " /></td>
+                            <td>
+                                <a href="/cancelAppointment/${appointment.id}"/>Cancel</a>
+                            </td>
                         </tr>
                     </c:forEach>
                 </table>

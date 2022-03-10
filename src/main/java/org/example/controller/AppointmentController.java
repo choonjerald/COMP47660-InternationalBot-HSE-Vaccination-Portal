@@ -46,7 +46,7 @@ public class AppointmentController {
     }
 
     @RequestMapping("/selectAppointmentTime/{id}")
-    public String selectAppointmentTime(@PathVariable(value = "id") Long vaccinationCentreId, Model model) {
+    public String selectAppointmentTime(@PathVariable(value = "id") Long vaccinationCentreId, Model model) throws AppointmentNotFoundException{
         List<Appointment> listAppointments = appointmentRepository.findAvailableByVaccinationCentre(vaccinationCentreId);
         model.addAttribute("listAppointments", listAppointments);
         return "selectAppointmentTime";
@@ -65,13 +65,17 @@ public class AppointmentController {
             Object principal = auth.getPrincipal();
 
             if (principal instanceof UserDetails) {
-                System.out.println("BOOKED");
                 String userEmail = ((UserDetails)principal).getUsername();
                 User user = userRepository.findByEmail(userEmail);
-                Appointment appointment = appointmentRepository.getById(appointmentId);
-                appointment.setBooked(true);
-                appointment.setUser(user);
-                appointmentRepository.saveAndFlush(appointment);
+
+                Appointment appointment = appointmentRepository.findById(appointmentId)
+                        .orElseThrow(() -> new AppointmentNotFoundException());
+                if(!appointment.isBooked()){
+                    appointment.setBooked(true);
+                    appointment.setUser(user);
+                    appointmentRepository.saveAndFlush(appointment);
+                }
+
                 model.addAttribute("user", user);
             } else {
                 String userEmail = principal.toString();
@@ -83,6 +87,39 @@ public class AppointmentController {
         return target;
     }
 
+    @RequestMapping("/cancelAppointment/{id}")
+    public String cancelAppointment(@PathVariable(value = "id") Long appointmentId, Model model) throws AppointmentNotFoundException, EmailNotFoundException {
+        // Get the role of logged in user
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String role = auth.getAuthorities().toString();
 
+        String target = "welcome";
+        if(role.contains("USER")) {
+            // Get the principal of logged in user
+            Object principal = auth.getPrincipal();
 
+            if (principal instanceof UserDetails) {
+                String userEmail = ((UserDetails)principal).getUsername();
+                User user = userRepository.findByEmail(userEmail);
+
+                Appointment appointment = appointmentRepository.findById(appointmentId)
+                        .orElseThrow(() -> new AppointmentNotFoundException());
+
+                if(appointment.isBooked() && appointment.getUser() == user){
+                    appointment.setBooked(false);
+                    appointment.setUser(null);
+                    appointmentRepository.saveAndFlush(appointment);
+                }
+
+                model.addAttribute("user", user);
+            } else {
+                String userEmail = principal.toString();
+            }
+            target = "home";
+
+        }
+
+        return "redirect:/";
+
+    }
 }

@@ -63,7 +63,7 @@ public class Appointment {
         this.time = time;
     }
 
-    public Boolean getBooked() {
+    public Boolean isBooked() {
         return isBooked;
     }
 
