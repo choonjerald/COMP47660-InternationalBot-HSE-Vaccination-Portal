@@ -57,6 +57,24 @@
                 </table>
             </div>
         </div>
+        <br>
+        <h3>Your Activity Log</h3>
+        <div class="card">
+            <div class="card-body">
+                <table class="center">
+                    <tr>
+                        <th>Time </th>
+                        <th>Activity </th>
+                    </tr>
+                    <c:forEach var="activity" items="${user.userActivities}">
+                        <tr>
+                            <td><c:out value="${activity.dateAndTime} " /></td>
+                            <td><c:out value="${activity.message} " /></td>
+                        </tr>
+                    </c:forEach>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
 </html>

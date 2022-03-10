@@ -66,6 +66,9 @@ public class User {
     @OneToMany(mappedBy ="user", cascade = CascadeType.ALL)
     Set<Appointment> appointments;
 
+    @OneToMany(mappedBy ="user", cascade = CascadeType.ALL)
+    Set<UserActivity> userActivities;
+
     public User(){ }
 
     public User(String firstName, String surname, String DOB, String ageGroup, String sex, String PPS, String address, String phone, String email, String nationality, String password, Collection < Role > roles) {
@@ -193,5 +196,13 @@ public class User {
 
     public void setAppointments(Set<Appointment> appointments) {
         this.appointments = appointments;
+    }
+
+    public Set<UserActivity> getUserActivities() {
+        return userActivities;
+    }
+
+    public void setUserActivities(Set<UserActivity> userActivities) {
+        this.userActivities = userActivities;
     }
 }

@@ -7,8 +7,10 @@ import org.example.exception.EmailNotFoundException;
 import org.example.exception.UserAlreadyExistException;
 import org.example.model.Appointment;
 import org.example.model.User;
+import org.example.model.UserActivity;
 import org.example.model.VaccinationCentre;
 import org.example.repository.AppointmentRepository;
+import org.example.repository.UserActivityRepository;
 import org.example.repository.UserRepository;
 import org.example.repository.VaccinationCentreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -34,6 +37,9 @@ public class AppointmentController {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    UserActivityRepository userActivityRepository;
 
     @Autowired
     VaccinationCentreRepository vaccinationCentreRepository;
@@ -116,6 +122,9 @@ public class AppointmentController {
                     appointment.setBooked(true);
                     appointment.setUser(user);
                     appointmentRepository.save(appointment);
+
+                    String activityMessage = "Appointment " + appointment.getDate() + " " + appointment.getTime() + " at " + appointment.getVaccinationCentre().getName() + " was booked.";
+                    userActivityRepository.save(new UserActivity(LocalDateTime.now(), activityMessage, user));
                 }
 
                 model.addAttribute("user", user);
@@ -149,7 +158,10 @@ public class AppointmentController {
                 if(appointment.isBooked() && appointment.getUser() == user){
                     appointment.setBooked(false);
                     appointment.setUser(null);
-                    appointmentRepository.saveAndFlush(appointment);
+                    appointmentRepository.save(appointment);
+
+                    String activityMessage = "Appointment " + appointment.getDate() + " " + appointment.getTime() + " at " + appointment.getVaccinationCentre().getName() + " was cancelled.";
+                    userActivityRepository.save(new UserActivity(LocalDateTime.now(), activityMessage, user));
                 }
 
                 model.addAttribute("user", user);
