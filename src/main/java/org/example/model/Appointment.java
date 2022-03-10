@@ -19,6 +19,8 @@ public class Appointment {
     //@NotBlank
     private Boolean isBooked;
 
+    private String appointmentType;
+
     @ManyToOne()
     @JoinColumn(name = "vaccinationCentre")
     private VaccinationCentre vaccinationCentre;
@@ -31,7 +33,7 @@ public class Appointment {
         super();
     }
 
-    public Appointment(Long id, LocalDate date, LocalTime time, Boolean isBooked) {
+    public Appointment(Long id, LocalDate date, LocalTime time, Boolean isBooked, String appointmentType) {
         super();
         this.id = id;
         this.date = date;
@@ -85,5 +87,13 @@ public class Appointment {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getAppointmentType() {
+        return appointmentType;
+    }
+
+    public void setAppointmentType(String appointmentType) {
+        this.appointmentType = appointmentType;
     }
 }

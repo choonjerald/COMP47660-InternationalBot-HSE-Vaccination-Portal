@@ -16,6 +16,12 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
     @Query("SELECT a FROM Appointment a WHERE a.isBooked = false AND a.vaccinationCentre.id = :id")
     List<Appointment> findAvailableByVaccinationCentre(Long id);
 
+    @Query("SELECT a FROM Appointment a WHERE a.isBooked = true")
+    List<Appointment> findAllBookedAppointments();
+
+    @Query("SELECT a FROM Appointment a WHERE a.isBooked = true AND a.user.id = :id")
+    Appointment findByUserId(Long id);
+
 //    @Modifying
 //    @Query("UPDATE Appointment a SET a.isBooked = true, a.user = :user WHERE a.id = :id")
 //    void bookAppointmentById(@Param("id") Long id, @Param("user") User user);

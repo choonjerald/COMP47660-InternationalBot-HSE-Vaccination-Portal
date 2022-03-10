@@ -53,6 +53,10 @@ public class User {
     //    @NotBlank(message = "password is required")
     private String password;
 
+    private String firstVaccine;
+
+    private String secondVaccine;
+
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "users_roles",
@@ -204,5 +208,21 @@ public class User {
 
     public void setUserActivities(Set<UserActivity> userActivities) {
         this.userActivities = userActivities;
+    }
+
+    public String getFirstVaccine() {
+        return firstVaccine;
+    }
+
+    public void setFirstVaccine(String firstVaccine) {
+        this.firstVaccine = firstVaccine;
+    }
+
+    public String getSecondVaccine() {
+        return secondVaccine;
+    }
+
+    public void setSecondVaccine(String secondVaccine) {
+        this.secondVaccine = secondVaccine;
     }
 }

@@ -24,12 +24,14 @@
                 <tr>
                     <th>Date</th>
                     <th>Time</th>
+                    <th>Type</th>
                     <th></th>
                 </tr>
                 <c:forEach var="appointment" items="${listAppointments}">
                     <tr>
                         <td><c:out value="${appointment.date}" /></td>
                         <td><c:out value="${appointment.time}" /></td>
+                        <td><c:out value="${appointment.appointmentType}" /></td>
                         <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <a href="/bookAppointment/${appointment.id}"  />Book</a>
                         </td>
