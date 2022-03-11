@@ -43,10 +43,9 @@
 
             <div id="navbarSupportedContent" class="collapse navbar-collapse">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item"><a href="/statistic" class="nav-link text-uppercase font-weight-bold">Statistics
-                        <span class="sr-only">(current)</span></a></li>
-                    <li class="nav-item"><a href="/logout" class="nav-link text-uppercase font-weight-bold">Logout</a>
-                    </li>
+                    <li class="nav-item"><a href="/faq" class="nav-link text-uppercase font-weight-bold">FAQ</a></li>
+                    <li class="nav-item"><a href="/statistic" class="nav-link text-uppercase font-weight-bold">Statistics</a></li>
+                    <li class="nav-item"><a href="/logout" class="nav-link text-uppercase font-weight-bold">Logout</a></li>
                 </ul>
             </div>
         </div>

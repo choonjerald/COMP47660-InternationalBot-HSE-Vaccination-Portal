@@ -32,9 +32,17 @@
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active"><a href="/statistic" class="nav-link text-uppercase font-weight-bold">Statistics<span
                             class="sr-only">(current)</span></a></li>
-                    <li class="nav-item"><a href="/selectVaccinationCentre/"
-                                            class="nav-link text-uppercase font-weight-bold">Book Appointment</a></li>
-                    <li class="nav-item"><a href="/faq" class="nav-link text-uppercase font-weight-bold">Visit FAQ</a></li>
+                    <c:choose>
+                        <c:when test="${(user.firstVaccine != null && user.secondVaccine != null) ||
+                        (user.firstVaccine != null && user.secondVaccine == null) || (userAppointment != null)}">
+                        </c:when>
+                        <c:otherwise>
+                            <li class="nav-item"><a href="/selectVaccinationCentre/"
+                                                    class="nav-link text-uppercase font-weight-bold">Book
+                                Appointment</a></li>
+                        </c:otherwise>
+                    </c:choose>
+                    <li class="nav-item"><a href="/faq" class="nav-link text-uppercase font-weight-bold">FAQ</a></li>
                     <li class="nav-item"><a href="/logout" class="nav-link text-uppercase font-weight-bold">Logout</a>
                     </li>
                 </ul>
