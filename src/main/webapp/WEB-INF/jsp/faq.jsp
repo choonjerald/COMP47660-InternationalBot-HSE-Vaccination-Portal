@@ -25,7 +25,7 @@
 
             <div id="navbarSupportedContent" class="collapse navbar-collapse">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item"><a href="/faq/create" class="nav-link text-uppercase font-weight-bold">Create New</a></li>
+                    <li class="nav-item"><a href="/statistic" class="nav-link text-uppercase font-weight-bold">Statistics</a></li>
                 </ul>
             </div>
         </div>
