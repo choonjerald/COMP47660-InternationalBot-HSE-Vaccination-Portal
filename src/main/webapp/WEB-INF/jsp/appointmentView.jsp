@@ -6,7 +6,7 @@
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <html>
 <head>
-    <title>HSE Vaccination Appointment Registration</title>
+    <title>HSE Vaccination Appointment</title>
 </head>
 <style>
     .error {

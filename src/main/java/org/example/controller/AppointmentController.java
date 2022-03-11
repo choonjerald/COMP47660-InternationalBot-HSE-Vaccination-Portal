@@ -110,6 +110,7 @@ public class AppointmentController {
 
                 Appointment appointment = appointmentRepository.findById(appointmentId)
                         .orElseThrow(AppointmentNotFoundException::new);
+
                 if (!appointment.isBooked() && user.getAppointments().isEmpty() && user.getSecondVaccine() == null) {
                     appointment.setBooked(true);
                     appointment.setUser(user);
