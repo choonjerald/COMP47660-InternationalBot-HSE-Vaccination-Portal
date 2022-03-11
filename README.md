@@ -1,5 +1,5 @@
-#To Run This Application
-##Create new Schema on MySQL Database called 'hse' before running the web application.
+# To Run This Application
+## Create new Schema on MySQL Database called 'hse' before running the web application.
 
 
 **Admin Credentials**
