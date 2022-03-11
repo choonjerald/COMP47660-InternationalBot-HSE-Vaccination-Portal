@@ -19,9 +19,12 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("SELECT a.ageGroup, COUNT(a.ageGroup) AS magnitude FROM User a GROUP BY a.ageGroup ORDER BY magnitude DESC")
     List<String> getMostCommonAgeGroup();
 
-    //SELECT (IFNull(sex,'Total')) AS sex, COUNT(id) AS Count FROM users GROUP BY sex WITH rollup; -- returns total
-    // SELECT sex, COUNT(id) AS Count FROM users GROUP BY sex;
     @Query("SELECT a.sex, COUNT(a.id) AS Count FROM User a GROUP BY a.sex ORDER BY a.sex DESC")
-    // always male first
     List<String> getGenderCounts();
+
+    @Query("SELECT COUNT(a.firstVaccine) AS Count FROM User a WHERE a.firstVaccine = :vaccine ")
+    String getFirstVaccineCount(String vaccine);
+
+    @Query("SELECT COUNT(a.secondVaccine) AS Count FROM User a WHERE a.secondVaccine = :vaccine")
+    String getSecondVaccineCount(String vaccine);
 }

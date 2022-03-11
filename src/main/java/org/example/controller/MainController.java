@@ -72,9 +72,23 @@ public class MainController {
         model.addAttribute("mostCommonNationality", userRepository.getMostCommonNationality().get(0).split(",")[0]);
         model.addAttribute("mostCommonAgeGroup", userRepository.getMostCommonAgeGroup().get(0).split(",")[0]);
         model.addAttribute("registeredMales", userRepository.getGenderCounts().get(0).split(",")[1]);
-//        model.addAttribute("registeredFemales", userRepository.getGenderCounts().get(1).split(",")[1]);
-
+        model.addAttribute("registeredFemales", getGenderCount(userRepository.getGenderCounts()));
+        model.addAttribute("firstVaccinePfizerCount", userRepository.getFirstVaccineCount("Pfizer"));
+        model.addAttribute("secondVaccinePfizerCount", userRepository.getSecondVaccineCount("Pfizer"));
+        model.addAttribute("firstVaccineModernaCount", userRepository.getFirstVaccineCount("Moderna"));
+        model.addAttribute("secondVaccineModernaCount", userRepository.getSecondVaccineCount("Moderna"));
         return "/statistic";
+    }
+
+    public String getGenderCount(List<String> user) {
+        if (user.size() > 1) {
+            try {
+                return user.get(1).split(",")[1];
+            } catch (IndexOutOfBoundsException e){
+                System.out.println(e);
+            }
+        }
+        return "0";
     }
 
 }

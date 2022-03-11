@@ -1,8 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+         pageEncoding="ISO-8859-1"%>
+<%@page import="java.util.*" %>
+<%@page import="fusioncharts.FusionCharts" %>
+
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link href="../Styles/ChartSampleStyleSheet.css" rel="stylesheet" />
+<script type="text/javascript" src="//cdn.fusioncharts.com/fusioncharts/latest/fusioncharts.js"></script>
+<script type="text/javascript" src="//cdn.fusioncharts.com/fusioncharts/latest/themes/fusioncharts.theme.fusion.js"></script>
 <style>
     <%@include file="../css/welcome.css"%>
     .scrolled-down {
@@ -14,12 +19,34 @@
         transform: translateY(0);
         transition: all 0.3s ease-in-out;
     }
+    table {
+        margin: 0 auto;
+        border-collapse: collapse;
+        overflow: hidden;
+        box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    }
+
+    th, td {
+        padding: 15px;
+        color: white;
+        text-align: center;
+        font-size: large;
+        font-weight: bold;
+    }
+    td {
+        background-color: rgba(255,255,255,0.2);
+    }
+    th {
+        background-color: #55608f;
+        text-align: left;
+    }
+    body{
+        background: linear-gradient(45deg, #49a09d, #5f2c82);
+    }
 </style>
 <html>
 <head>
     <title>Statistics</title>
-
-
 </head>
 <div class="autohide header-blue">
     <nav class="navbar navbar-light navbar-expand-md navigation-clean-search">
@@ -60,36 +87,97 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <h1>Aggregated statistics</h1>
+
+        <div class="mt-5 text-center">
+            <h1 class="text-white mb-5">Aggregated Statistics</h1>
+            <h1>${firstVaccinePfizerCount}</h1>
+            <h1>${secondVaccinePfizerCount}</h1>
+            <h1>${firstVaccineModernaCount}</h1>
+            <h1>${secondVaccineModernaCount}</h1>
+
+
+            <div class="container">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Highest Vaccinated Nationality</th>
+                        <th>Highest Vaccinated Age Group</th>
+                        <th>Registered Males</th>
+                        <th>Registered Females</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>${mostCommonNationality}</td>
+                        <td>${mostCommonAgeGroup}</td>
+                        <td>${registeredMales}</td>
+                        <td>${registeredFemales}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
-        <div class="row">
-            <div class="column mr-5 ">
-                <h2>Highest Vaccined Nationality</h2>
-                <h3 id="mostCommonNationality"><c:out value="${mostCommonNationality}"/></h3>
-            </div>
+        <div id="chart"></div>
+        <div><span><a href="../Index.jsp">Go Back</a></span></div>
+        <%
+            // store chart config name-config value pair
+            Map<String, String> chartConfig = new HashMap<String, String>();
+            chartConfig.put("caption", "Countries With Most Oil Reserves [2017-18]");
+            chartConfig.put("subCaption", "In MMbbl = One Million barrels");
+            chartConfig.put("xAxisName", "Country");
+            chartConfig.put("yAxisName", "Reserves (MMbbl)");
+            chartConfig.put("numberSuffix", "k");
+            chartConfig.put("theme", "fusion");
 
-            <div class="column mr-5 ">
-                <h2>Highest Vaccined Age group</h2>
-                <h3><c:out value="${mostCommonAgeGroup}"/></h3>
-            </div>
+            //store label-value pair
+            Map<String, Integer> dataValuePair = new HashMap<String, Integer>();
+            dataValuePair.put("Venezuela", 290);
+            dataValuePair.put("Saudi", 260);
+            dataValuePair.put("Canada", 180);
+            dataValuePair.put("Iran", 140);
+            dataValuePair.put("Russia", 115);
+            dataValuePair.put("UAE", 100);
+            dataValuePair.put("US", 30);
+            dataValuePair.put("China", 30);
 
-            <div class="column mr-5 ">
-                <h2>Registered Males</h2>
-                <h3><c:out value="${registeredMales}"/></h3>
-            </div>
+            StringBuilder jsonData = new StringBuilder();
+            StringBuilder data = new StringBuilder();
+            // json data to use as chart data source
+            jsonData.append("{'chart':{");
+            for(Map.Entry conf:chartConfig.entrySet())
+            {
+                jsonData.append("'" + conf.getKey()+"':'"+conf.getValue() + "',");
+            }
 
-            <%--            can fill db with initial female data to not through out of bound error--%>
-            <%--            <div class="column mr-5 ">--%>
-            <%--                <h2>Registered Females</h2>--%>
-            <%--                <h3><c:out value="${registeredFemales}" /></h3>--%>
-            <%--            </div>--%>
+            jsonData.replace(jsonData.length() - 1, jsonData.length() ,"},");
 
-        </div>
+            // build  data object from label-value pair
+            data.append("'data':[");
 
-        <div id="piechart_3d" backgroud style="width: 900px; height: 500px;"></div>
+            for(Map.Entry pair:dataValuePair.entrySet())
+            {
+                data.append("{'label':'" + pair.getKey() + "','value':'" + pair.getValue() +"'},");
+            }
+            data.replace(data.length() - 1, data.length(),"]");
 
+            jsonData.append(data.toString());
+            jsonData.append("}");
+
+
+//Create chart instance
+            // charttype, chartID, width, height,containerid, data format, data
+            FusionCharts firstChart = new FusionCharts(
+                    "column2d",
+                    "first_chart",
+                    "800",
+                    "550",
+                    "chart",
+                    "json",
+                    jsonData.toString()
+            );
+        %>
+        <%= firstChart.render() %>
 
     </div>
 </div>
@@ -123,31 +211,40 @@
         // if
 
     });
-</script>
+    window.onload = function() {
 
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript">
-    google.charts.load("current", {packages:["corechart"]});
-    google.charts.setOnLoadCallback(drawChart);
-    function drawChart() {
-        var nation = document.getElementById("mostCommonNationality");
-        console.log(nation);
-        var data = google.visualization.arrayToDataTable([
-            ['Task', 'Hours per Day'],
-            ['Work',     11],
-            ['Eat',      2],
-            ['Commute',  2],
-            ['Watch TV', 2],
-            ['Sleep',    7]
-        ]);
+        var chart = new CanvasJS.Chart("chartContainer", {
+            theme: "light2",
+            title: {
+                text: "Facebook for Android - App Rating"
+            },
+            subtitles: [{
+                text: "December 2017"
+            }],
+            axisY: {
+                title: "Number of Users",
+                labelFormatter: addSymbols
+            },
+            data: [{
+                type: "bar",
+                indexLabel: "{y}",
+                indexLabelFontColor: "#444",
+                indexLabelPlacement: "inside",
+                dataPoints: <%out.print(dataPoints);%>
+            }]
+        });
+        chart.render();
 
-        var options = {
-            title: 'My Daily Activities',
-            is3D: true,
-            backgroundColor: 'transparent',
-        };
+        function addSymbols(e) {
+            var suffixes = ["", "K", "M", "B"];
 
-        var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
-        chart.draw(data, options);
+            var order = Math.max(Math.floor(Math.log(e.value) / Math.log(1000)), 0);
+            if(order > suffixes.length - 1)
+                order = suffixes.length - 1;
+
+            var suffix = suffixes[order];
+            return CanvasJS.formatNumber(e.value / Math.pow(1000, order)) + suffix;
+        }
+
     }
 </script>
