@@ -34,7 +34,7 @@
                         <td><c:out value="${appointment.time}"/></td>
                         <td><c:out value="${appointment.appointmentType}"/></td>
                         <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <a href="/bookAppointment/${appointment.id}"/>Book</a>
+                            <a class="btn btn-primary" href="/bookAppointment/${appointment.id}"/>Book</a>
                         </td>
                     </tr>
                 </c:forEach>

@@ -96,11 +96,11 @@
             <table class="table">
                 <tr>
                     <td>
-                        <a href="/recordVaccination/${user.id}/${"pfizer"}" class="btn btn-dark btn-lg action-button">Pfizer<i
+                        <a href="/recordVaccination/${user.id}/${"pfizer"}" class="btn btn-primary action-button">Pfizer<i
                                 class="fa fa-long-arrow-right ml-2"></i></a>
                     </td>
                     <td>
-                        <a href="/recordVaccination/${user.id}/${"moderna"}" class="btn btn-dark btn-lg action-button">Moderna<i
+                        <a href="/recordVaccination/${user.id}/${"moderna"}" class="btn btn-primary action-button">Moderna<i
                                 class="fa fa-long-arrow-right ml-2"></i></a>
                     </td>
                 </tr>

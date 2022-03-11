@@ -87,14 +87,14 @@
                             <td><c:out value="${appointment.user.PPS} "/></td>
                             <td><c:out value="${appointment.appointmentType} "/></td>
                             <td>
-                                <a href="/viewAppointment/${appointment.id}"/> View</a>
+                                <a class="btn btn-primary" href="/viewAppointment/${appointment.id}"/> View</a>
                             </td>
                         </tr>
                     </c:forEach>
                 </table>
             </div>
         </div>
-
+        <br>
         <h3>Unanswered Questions</h3>
         <div class="card">
             <div class="card-body">

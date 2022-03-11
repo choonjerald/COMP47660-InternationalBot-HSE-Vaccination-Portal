@@ -111,7 +111,7 @@
                                         <td>
                                             <c:choose>
                                                 <c:when test="${appointment.appointmentType == 'First Dose'}">
-                                                    <a href="/cancelAppointment/${appointment.id}"/>Cancel</a>
+                                                    <a class="btn btn-primary" href="/cancelAppointment/${appointment.id}"/>Cancel</a>
                                                 </c:when>
                                                 <c:otherwise>
                                                 </c:otherwise>
