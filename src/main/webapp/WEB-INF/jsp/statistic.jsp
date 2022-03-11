@@ -1,13 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-         pageEncoding="ISO-8859-1"%>
-<%@page import="java.util.*" %>
-<%@page import="fusioncharts.FusionCharts" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<link href="../Styles/ChartSampleStyleSheet.css" rel="stylesheet" />
-<script type="text/javascript" src="//cdn.fusioncharts.com/fusioncharts/latest/fusioncharts.js"></script>
-<script type="text/javascript" src="//cdn.fusioncharts.com/fusioncharts/latest/themes/fusioncharts.theme.fusion.js"></script>
+
 <style>
     <%@include file="../css/welcome.css"%>
     .scrolled-down {
@@ -56,7 +53,7 @@
                 <c:choose>
                     <c:when test="${role == '[USER]' || role == '[ADMIN]'}">
                         <li class="nav-item"><a href="/logout"
-                                                class="nav-link text-uppercase font-weight-bold">Logout</a></li>
+                                                class="nav-link text-uppercase font-weight-bold text-white">Logout</a></li>
                     </c:when>
                     <c:otherwise>
                         <li class="nav-item"><a href="/login"
@@ -95,7 +92,6 @@
             <h1>${firstVaccineModernaCount}</h1>
             <h1>${secondVaccineModernaCount}</h1>
 
-
             <div class="container">
                 <table>
                     <thead>
@@ -117,67 +113,6 @@
                 </table>
             </div>
         </div>
-
-        <div id="chart"></div>
-        <div><span><a href="../Index.jsp">Go Back</a></span></div>
-        <%
-            // store chart config name-config value pair
-            Map<String, String> chartConfig = new HashMap<String, String>();
-            chartConfig.put("caption", "Countries With Most Oil Reserves [2017-18]");
-            chartConfig.put("subCaption", "In MMbbl = One Million barrels");
-            chartConfig.put("xAxisName", "Country");
-            chartConfig.put("yAxisName", "Reserves (MMbbl)");
-            chartConfig.put("numberSuffix", "k");
-            chartConfig.put("theme", "fusion");
-
-            //store label-value pair
-            Map<String, Integer> dataValuePair = new HashMap<String, Integer>();
-            dataValuePair.put("Venezuela", 290);
-            dataValuePair.put("Saudi", 260);
-            dataValuePair.put("Canada", 180);
-            dataValuePair.put("Iran", 140);
-            dataValuePair.put("Russia", 115);
-            dataValuePair.put("UAE", 100);
-            dataValuePair.put("US", 30);
-            dataValuePair.put("China", 30);
-
-            StringBuilder jsonData = new StringBuilder();
-            StringBuilder data = new StringBuilder();
-            // json data to use as chart data source
-            jsonData.append("{'chart':{");
-            for(Map.Entry conf:chartConfig.entrySet())
-            {
-                jsonData.append("'" + conf.getKey()+"':'"+conf.getValue() + "',");
-            }
-
-            jsonData.replace(jsonData.length() - 1, jsonData.length() ,"},");
-
-            // build  data object from label-value pair
-            data.append("'data':[");
-
-            for(Map.Entry pair:dataValuePair.entrySet())
-            {
-                data.append("{'label':'" + pair.getKey() + "','value':'" + pair.getValue() +"'},");
-            }
-            data.replace(data.length() - 1, data.length(),"]");
-
-            jsonData.append(data.toString());
-            jsonData.append("}");
-
-
-//Create chart instance
-            // charttype, chartID, width, height,containerid, data format, data
-            FusionCharts firstChart = new FusionCharts(
-                    "column2d",
-                    "first_chart",
-                    "800",
-                    "550",
-                    "chart",
-                    "json",
-                    jsonData.toString()
-            );
-        %>
-        <%= firstChart.render() %>
 
     </div>
 </div>
@@ -209,42 +144,6 @@
             // window.addEventListener
         }
         // if
-
     });
-    window.onload = function() {
 
-        var chart = new CanvasJS.Chart("chartContainer", {
-            theme: "light2",
-            title: {
-                text: "Facebook for Android - App Rating"
-            },
-            subtitles: [{
-                text: "December 2017"
-            }],
-            axisY: {
-                title: "Number of Users",
-                labelFormatter: addSymbols
-            },
-            data: [{
-                type: "bar",
-                indexLabel: "{y}",
-                indexLabelFontColor: "#444",
-                indexLabelPlacement: "inside",
-                dataPoints: <%out.print(dataPoints);%>
-            }]
-        });
-        chart.render();
-
-        function addSymbols(e) {
-            var suffixes = ["", "K", "M", "B"];
-
-            var order = Math.max(Math.floor(Math.log(e.value) / Math.log(1000)), 0);
-            if(order > suffixes.length - 1)
-                order = suffixes.length - 1;
-
-            var suffix = suffixes[order];
-            return CanvasJS.formatNumber(e.value / Math.pow(1000, order)) + suffix;
-        }
-
-    }
 </script>
