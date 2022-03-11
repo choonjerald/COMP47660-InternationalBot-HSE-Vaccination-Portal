@@ -158,7 +158,7 @@ public class AppointmentController {
                 Appointment appointment = appointmentRepository.findById(appointmentId)
                         .orElseThrow(() -> new AppointmentNotFoundException());
 
-                if(appointment.isBooked() && appointment.getUser() == user){
+                if(appointment.isBooked() && appointment.getUser() == user && appointment.getAppointmentType().equals("First Dose")){
                     appointment.setBooked(false);
                     appointment.setUser(null);
                     appointmentRepository.save(appointment);

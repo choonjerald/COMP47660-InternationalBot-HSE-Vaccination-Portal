@@ -81,7 +81,13 @@
                             <td><c:out value="${appointment.time} " /></td>
                             <td><c:out value="${appointment.appointmentType} " /></td>
                             <td>
-                                <a href="/cancelAppointment/${appointment.id}"/>Cancel</a>
+                                <c:choose>
+                                    <c:when test="${appointment.appointmentType == 'First Dose'}">
+                                        <a href="/cancelAppointment/${appointment.id}"/>Cancel</a>
+                                    </c:when>
+                                    <c:otherwise>
+                                    </c:otherwise>
+                                </c:choose>
                             </td>
                         </tr>
                     </c:forEach>
