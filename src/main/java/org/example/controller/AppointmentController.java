@@ -1,10 +1,8 @@
 package org.example.controller;
 
 
-import org.example.dto.UserRegistrationDto;
 import org.example.exception.AppointmentNotFoundException;
 import org.example.exception.EmailNotFoundException;
-import org.example.exception.UserAlreadyExistException;
 import org.example.exception.UserNotFoundException;
 import org.example.model.Appointment;
 import org.example.model.User;
@@ -19,18 +17,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
-
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class AppointmentController {
@@ -54,50 +47,46 @@ public class AppointmentController {
         String role = auth.getAuthorities().toString();
 
         String target = "welcome";
-        if(role.contains("USER")) {
+        if (role.contains("USER")) {
             // Get the principal of logged in user
             Object principal = auth.getPrincipal();
 
             if (principal instanceof UserDetails) {
-                String userEmail = ((UserDetails)principal).getUsername();
+                String userEmail = ((UserDetails) principal).getUsername();
                 User user = userRepository.findByEmail(userEmail);
 
-                if(user.getAppointments().isEmpty() && user.getSecondVaccine() == null){
+                if (user.getAppointments().isEmpty() && user.getSecondVaccine() == null) {
                     List<VaccinationCentre> listVaccinationCentres = vaccinationCentreRepository.findAll();
                     model.addAttribute("listVaccinationCentres", listVaccinationCentres);
                     target = "selectVaccinationCentre";
                 } else target = "redirect:/";
 
-            } else {
-                String userEmail = principal.toString();
             }
         }
         return target;
     }
 
     @RequestMapping("/selectAppointmentTime/{id}")
-    public String selectAppointmentTime(@PathVariable(value = "id") Long vaccinationCentreId, Model model) throws AppointmentNotFoundException, EmailNotFoundException {
+    public String selectAppointmentTime(@PathVariable(value = "id") Long vaccinationCentreId, Model model) throws EmailNotFoundException {
         // Get the role of logged in user
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String role = auth.getAuthorities().toString();
 
         String target = "welcome";
-        if(role.contains("USER")) {
+        if (role.contains("USER")) {
             // Get the principal of logged in user
             Object principal = auth.getPrincipal();
 
             if (principal instanceof UserDetails) {
-                String userEmail = ((UserDetails)principal).getUsername();
+                String userEmail = ((UserDetails) principal).getUsername();
                 User user = userRepository.findByEmail(userEmail);
 
-                if(user.getAppointments().isEmpty() && user.getSecondVaccine() == null){
+                if (user.getAppointments().isEmpty() && user.getSecondVaccine() == null) {
                     List<Appointment> listAppointments = appointmentRepository.findAvailableByVaccinationCentre(vaccinationCentreId);
                     model.addAttribute("listAppointments", listAppointments);
                     target = "selectAppointmentTime";
                 } else target = "redirect:/";
 
-            } else {
-                String userEmail = principal.toString();
             }
         }
         return target;
@@ -111,17 +100,17 @@ public class AppointmentController {
         String role = auth.getAuthorities().toString();
 
         String target = "welcome";
-        if(role.contains("USER")) {
+        if (role.contains("USER")) {
             // Get the principal of logged in user
             Object principal = auth.getPrincipal();
 
             if (principal instanceof UserDetails) {
-                String userEmail = ((UserDetails)principal).getUsername();
+                String userEmail = ((UserDetails) principal).getUsername();
                 User user = userRepository.findByEmail(userEmail);
 
                 Appointment appointment = appointmentRepository.findById(appointmentId)
-                        .orElseThrow(() -> new AppointmentNotFoundException());
-                if(!appointment.isBooked() && user.getAppointments().isEmpty() && user.getSecondVaccine() == null){
+                        .orElseThrow(AppointmentNotFoundException::new);
+                if (!appointment.isBooked() && user.getAppointments().isEmpty() && user.getSecondVaccine() == null) {
                     appointment.setBooked(true);
                     appointment.setUser(user);
                     appointmentRepository.save(appointment);
@@ -131,8 +120,6 @@ public class AppointmentController {
                 }
 
                 model.addAttribute("user", user);
-            } else {
-                String userEmail = principal.toString();
             }
             target = "redirect:/";
 
@@ -146,19 +133,18 @@ public class AppointmentController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String role = auth.getAuthorities().toString();
 
-        String target = "welcome";
-        if(role.contains("USER")) {
+        if (role.contains("USER")) {
             // Get the principal of logged in user
             Object principal = auth.getPrincipal();
 
             if (principal instanceof UserDetails) {
-                String userEmail = ((UserDetails)principal).getUsername();
+                String userEmail = ((UserDetails) principal).getUsername();
                 User user = userRepository.findByEmail(userEmail);
 
                 Appointment appointment = appointmentRepository.findById(appointmentId)
-                        .orElseThrow(() -> new AppointmentNotFoundException());
+                        .orElseThrow(AppointmentNotFoundException::new);
 
-                if(appointment.isBooked() && appointment.getUser() == user && appointment.getAppointmentType().equals("First Dose")){
+                if (appointment.isBooked() && appointment.getUser() == user && appointment.getAppointmentType().equals("First Dose")) {
                     appointment.setBooked(false);
                     appointment.setUser(null);
                     appointmentRepository.save(appointment);
@@ -168,11 +154,7 @@ public class AppointmentController {
                 }
 
                 model.addAttribute("user", user);
-            } else {
-                String userEmail = principal.toString();
             }
-            target = "home";
-
         }
 
         return "redirect:/";
@@ -186,13 +168,13 @@ public class AppointmentController {
         String role = auth.getAuthorities().toString();
 
         String target = "welcome";
-        if(role.contains("ADMIN")) {
+        if (role.contains("ADMIN")) {
             Appointment appointment = appointmentRepository.findById(appointmentId)
-                    .orElseThrow(() -> new AppointmentNotFoundException());
+                    .orElseThrow(AppointmentNotFoundException::new);
             model.addAttribute("appointment", appointment);
 
             User user = userRepository.findById(appointment.getUser().getId())
-                    .orElseThrow(() -> new UserNotFoundException());
+                    .orElseThrow(UserNotFoundException::new);
             model.addAttribute("user", user);
 
             target = "appointmentView";
@@ -201,19 +183,19 @@ public class AppointmentController {
     }
 
     @RequestMapping("/recordVaccination/{userId}/{vaccine}")
-    public String recordVaccination(@PathVariable(value = "userId") Long userId, @PathVariable(value = "vaccine") String vaccine, Model model) throws UserNotFoundException{
+    public String recordVaccination(@PathVariable(value = "userId") Long userId, @PathVariable(value = "vaccine") String vaccine, Model model) throws UserNotFoundException {
         // Get the role of logged in user
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String role = auth.getAuthorities().toString();
 
         String target = "welcome";
-        if(role.contains("ADMIN")) {
+        if (role.contains("ADMIN")) {
             User user = userRepository.findById(userId)
-                    .orElseThrow(() -> new UserNotFoundException());
+                    .orElseThrow(UserNotFoundException::new);
 
-            if(user.getFirstVaccine() == null){
-                if(vaccine.equals("pfizer")) user.setFirstVaccine("Pfizer");
-                else if(vaccine.equals("moderna")) user.setFirstVaccine("Moderna");
+            if (user.getFirstVaccine() == null) {
+                if (vaccine.equals("pfizer")) user.setFirstVaccine("Pfizer");
+                else if (vaccine.equals("moderna")) user.setFirstVaccine("Moderna");
                 else return "redirect:/login";
 
                 userRepository.save(user);
@@ -229,9 +211,9 @@ public class AppointmentController {
 
                 activityMessage = "Second dose appointment booked at " + appointment.getVaccinationCentre().getName() + " on " + appointment.getDate() + " at " + appointment.getTime() + ".";
                 userActivityRepository.save(new UserActivity(LocalDateTime.now(), activityMessage, user));
-            } else if(user.getFirstVaccine() != null){
-                if(vaccine.equals("pfizer")) user.setSecondVaccine("Pfizer");
-                else if(vaccine.equals("moderna")) user.setSecondVaccine("Moderna");
+            } else if (user.getFirstVaccine() != null) {
+                if (vaccine.equals("pfizer")) user.setSecondVaccine("Pfizer");
+                else if (vaccine.equals("moderna")) user.setSecondVaccine("Moderna");
                 else return "redirect:/login";
 
                 userRepository.save(user);

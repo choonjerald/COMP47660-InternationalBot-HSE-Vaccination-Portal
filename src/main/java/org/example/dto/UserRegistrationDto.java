@@ -15,44 +15,29 @@ import java.time.ZoneId;
 import java.util.Date;
 
 public class UserRegistrationDto {
-    public interface Extended{}
-
-    @GroupSequence({Default.class, Extended.class})
-    public interface MySequence {}
-
     @NotBlank(message = "First Name is required")
     private String firstName;
-
     @NotBlank(message = "Surname is required")
     private String surname;
-
     @NotEmpty(message = "Date of Birth is required")
-    @CheckAge(groups= Extended.class)
+    @CheckAge(groups = Extended.class)
     private String DOB;
-
     private String ageGroup;
-
     @NotEmpty(message = "Sex is required")
     private String sex;
-
     @NotBlank(message = "PPS number is required")
-    @Pattern(regexp = "^\\d{7}.{1,2}$" ,message = "A PPS Number is always 7 numbers followed by either one or 2 letters", groups= Extended.class)
+    @Pattern(regexp = "^\\d{7}.{1,2}$", message = "A PPS Number is always 7 numbers followed by either one or 2 letters", groups = Extended.class)
     private String PPS;
-
     @NotBlank(message = "Address is required")
     private String address;
-
     @NotBlank(message = "Phone number is required")
-    @Pattern(regexp = "^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$", message = "Use a valid phone number", groups= Extended.class)
+    @Pattern(regexp = "^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$", message = "Use a valid phone number", groups = Extended.class)
     private String phone;
-
     @NotBlank(message = "Email is required")
-    @Pattern(regexp = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])", message = "Use a Valid Email Address", groups= Extended.class)
+    @Pattern(regexp = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])", message = "Use a Valid Email Address", groups = Extended.class)
     private String email;
-
     @NotBlank(message = "Nationality is required")
     private String nationality;
-
     @NotBlank(message = "Password is required")
     private String password;
 
@@ -108,12 +93,19 @@ public class UserRegistrationDto {
         }
         LocalDate today = LocalDate.now();
         Period age = Period.between(birthdate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), today);
-        if (age.getYears() >= 18 && age.getYears() <= 25) {setAgeGroup("18 - 25");}
-        else if (age.getYears() >= 26 && age.getYears() <= 35) {setAgeGroup("26 - 35");}
-        else if (age.getYears() >= 36 && age.getYears() <= 45) {setAgeGroup("36 - 45");}
-        else if (age.getYears() >= 46 && age.getYears() <= 55) {setAgeGroup("46 - 55");}
-        else if (age.getYears() >= 56 && age.getYears() <= 65) {setAgeGroup("56 - 65");}
-        else {setAgeGroup("Over 66");}
+        if (age.getYears() >= 18 && age.getYears() <= 25) {
+            setAgeGroup("18 - 25");
+        } else if (age.getYears() >= 26 && age.getYears() <= 35) {
+            setAgeGroup("26 - 35");
+        } else if (age.getYears() >= 36 && age.getYears() <= 45) {
+            setAgeGroup("36 - 45");
+        } else if (age.getYears() >= 46 && age.getYears() <= 55) {
+            setAgeGroup("46 - 55");
+        } else if (age.getYears() >= 56 && age.getYears() <= 65) {
+            setAgeGroup("56 - 65");
+        } else {
+            setAgeGroup("Over 66");
+        }
 
         return ageGroup;
     }
@@ -122,7 +114,9 @@ public class UserRegistrationDto {
         this.ageGroup = ageGroup;
     }
 
-    public String getSex() { return sex; }
+    public String getSex() {
+        return sex;
+    }
 
     public void setSex(String sex) {
         this.sex = sex;
@@ -174,5 +168,12 @@ public class UserRegistrationDto {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public interface Extended {
+    }
+
+    @GroupSequence({Default.class, Extended.class})
+    public interface MySequence {
     }
 }

@@ -10,9 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @Controller
@@ -31,7 +29,7 @@ public class UserController {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         if (principal instanceof UserDetails) {
-            String userEmail = ((UserDetails)principal).getUsername();
+            String userEmail = ((UserDetails) principal).getUsername();
             User user = userRepository.findByEmail(userEmail);
             model.addAttribute("user", user);
             Appointment userAppointment = appointmentRepository.findByUserId(user.getId());

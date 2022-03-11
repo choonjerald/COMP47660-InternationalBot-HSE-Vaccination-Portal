@@ -16,16 +16,17 @@
 </style>
 <body>
 <div class="container">
+    <br>
     <h1> Book an Appointment</h1>
-    <h2> Select a Vaccination Centre</h2>
     <div class="card">
         <div class="card-body">
-            <table class="center">
+            <h2> Select a Vaccination Centre</h2>
+            <table class="table">
                 <c:forEach var="vaccinationCentre" items="${listVaccinationCentres}">
                     <tr>
-                        <td><c:out value="${vaccinationCentre.name}" /></td>
+                        <td><c:out value="${vaccinationCentre.name}"/></td>
                         <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <a href="/selectAppointmentTime/${vaccinationCentre.id}"  />View Time Slots</a>
+                            <a href="/selectAppointmentTime/${vaccinationCentre.id}"/>View Time Slots</a>
                         </td>
                     </tr>
                 </c:forEach>

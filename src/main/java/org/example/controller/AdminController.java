@@ -18,12 +18,12 @@ public class AdminController {
     AppointmentRepository appointmentRepository;
 
     @RequestMapping({"/home"})
-    public String viewHomePage(Model model){
+    public String viewHomePage(Model model) {
         // Get the role of logged in user
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String role = auth.getAuthorities().toString();
 
-        if(role.contains("ADMIN")) {
+        if (role.contains("ADMIN")) {
             List<Appointment> appointments = appointmentRepository.findAllBookedAppointments();
             model.addAttribute("appointments", appointments);
         }

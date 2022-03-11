@@ -7,18 +7,18 @@ import java.util.Set;
 @Entity
 @Table(name = "vaccinationCentres")
 public class VaccinationCentre {
+    @OneToMany(mappedBy = "vaccinationCentre", cascade = CascadeType.ALL)
+    Set<Appointment> appointments;
     @Id
     @GeneratedValue
     private Long id;
     @NotBlank
     private String name;
 
-    @OneToMany(mappedBy ="vaccinationCentre", cascade = CascadeType.ALL)
-    Set<Appointment> appointments;
-
-    public VaccinationCentre(){
+    public VaccinationCentre() {
         super();
     }
+
     public VaccinationCentre(Long id, String vaccination_centre) {
         super();
         this.id = id;
@@ -28,6 +28,7 @@ public class VaccinationCentre {
     public Long getId() {
         return id;
     }
+
     public void setId(Long id) {
         this.id = id;
     }

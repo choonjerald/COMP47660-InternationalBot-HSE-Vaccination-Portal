@@ -21,6 +21,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     //SELECT (IFNull(sex,'Total')) AS sex, COUNT(id) AS Count FROM users GROUP BY sex WITH rollup; -- returns total
     // SELECT sex, COUNT(id) AS Count FROM users GROUP BY sex;
-    @Query("SELECT a.sex, COUNT(a.id) AS Count FROM User a GROUP BY a.sex ORDER BY a.sex DESC")  // always male first
+    @Query("SELECT a.sex, COUNT(a.id) AS Count FROM User a GROUP BY a.sex ORDER BY a.sex DESC")
+    // always male first
     List<String> getGenderCounts();
 }

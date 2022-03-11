@@ -1,9 +1,7 @@
 package org.example.model;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 @Entity
 @Table(name = "userActivities")
@@ -11,16 +9,16 @@ public class UserActivity {
     @Id
     @GeneratedValue()
     private Long id;
-   // @NotBlank
+
     private LocalDateTime dateAndTime;
-    //@NotBlank
+
     private String message;
 
     @ManyToOne()
     @JoinColumn(name = "user")
     private User user;
 
-    public UserActivity(){
+    public UserActivity() {
         super();
     }
 

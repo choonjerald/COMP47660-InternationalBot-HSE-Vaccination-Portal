@@ -3,7 +3,6 @@ package org.example.controller;
 import org.example.dto.UserRegistrationDto;
 import org.example.exception.EmailNotFoundException;
 import org.example.exception.UserAlreadyExistException;
-import org.example.model.User;
 import org.example.model.UserActivity;
 import org.example.repository.UserActivityRepository;
 import org.example.repository.UserRepository;
@@ -57,8 +56,8 @@ public class RegistrationController {
 
             String activityMessage = "Account created.";
             userActivityRepository.save(new UserActivity(LocalDateTime.now(), activityMessage, userRepository.findByEmail(registrationDto.getEmail())));
-        }catch (UserAlreadyExistException | EmailNotFoundException e){
-            result.rejectValue("email", "userData.email","An account already exists for this email.");
+        } catch (UserAlreadyExistException | EmailNotFoundException e) {
+            result.rejectValue("email", "userData.email", "An account already exists for this email.");
             return showRegistrationForm();
         }
         return "redirect:/login";

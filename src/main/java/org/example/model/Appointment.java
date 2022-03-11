@@ -1,10 +1,8 @@
 package org.example.model;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Set;
 
 @Entity
 @Table(name = "appointments")
@@ -12,11 +10,11 @@ public class Appointment {
     @Id
     @GeneratedValue()
     private Long id;
-   // @NotBlank
+
     private LocalDate date;
-    //@NotBlank
+
     private LocalTime time;
-    //@NotBlank
+
     private Boolean isBooked;
 
     private String appointmentType;
@@ -29,7 +27,7 @@ public class Appointment {
     @JoinColumn(name = "user")
     private User user;
 
-    public Appointment(){
+    public Appointment() {
         super();
     }
 

@@ -5,11 +5,14 @@
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <style>
     <%@include file="../css/welcome.css"%>
-    .scrolled-down{
-        transform:translateY(0); transition: all 0.3s ease-in-out;
+    .scrolled-down {
+        transform: translateY(0);
+        transition: all 0.3s ease-in-out;
     }
-    .scrolled-up{
-        transform:translateY(0); transition: all 0.3s ease-in-out;
+
+    .scrolled-up {
+        transform: translateY(0);
+        transition: all 0.3s ease-in-out;
     }
 </style>
 <html>
@@ -23,11 +26,17 @@
             <ul class="navbar-nav ml-auto">
                 <c:choose>
                     <c:when test="${role == '[USER]' || role == '[ADMIN]'}">
-                        <li class="nav-item"><a href="/logout" class="nav-link text-uppercase font-weight-bold">Logout</a></li>
+                        <li class="nav-item"><a href="/logout"
+                                                class="nav-link text-uppercase font-weight-bold">Logout</a></li>
                     </c:when>
                     <c:otherwise>
-                        <li class="nav-item"><a href="/login" class="nav-link text-uppercase font-weight-bold text-white">Login</a></li>
-                        <li class="nav-item"><a href="/registration" class="nav-link text-uppercase font-weight-bold text-white">Register</a></li>                    </c:otherwise>
+                        <li class="nav-item"><a href="/login"
+                                                class="nav-link text-uppercase font-weight-bold text-white">Login</a>
+                        </li>
+                        <li class="nav-item"><a href="/registration"
+                                                class="nav-link text-uppercase font-weight-bold text-white">Register</a>
+                        </li>
+                    </c:otherwise>
                 </c:choose>
 
             </ul>
@@ -43,7 +52,9 @@
                 </p>
             </div>
             <div class="col-md-5 col-lg-5 offset-lg-1 offset-xl-0 d-none d-lg-block syringe-holder">
-                <div class="syringe-mockup"> <img class="syringe" src="https://www.pinclipart.com/picdir/big/80-803622_hypodermic-needle-medicine-syringe-clip-art-wheel-heraldry.png"> <!-- <div class="screen">	</div>	-->
+                <div class="syringe-mockup"><img class="syringe"
+                                                 src="https://www.pinclipart.com/picdir/big/80-803622_hypodermic-needle-medicine-syringe-clip-art-wheel-heraldry.png">
+                    <!-- <div class="screen">	</div>	-->
                 </div>
             </div>
         </div>
@@ -54,17 +65,17 @@
         <div class="row">
             <div class="column mr-5 ">
                 <h2>Highest Vaccined Nationality</h2>
-                <h3><c:out value="${mostCommonNationality}" /></h3>
+                <h3><c:out value="${mostCommonNationality}"/></h3>
             </div>
 
             <div class="column mr-5 ">
                 <h2>Highest Vaccined Age group</h2>
-                <h3><c:out value="${mostCommonAgeGroup}" /></h3>
+                <h3><c:out value="${mostCommonAgeGroup}"/></h3>
             </div>
 
             <div class="column mr-5 ">
                 <h2>Registered Males</h2>
-                <h3><c:out value="${registeredMales}" /></h3>
+                <h3><c:out value="${registeredMales}"/></h3>
             </div>
 
             <%--            can fill db with initial female data to not through out of bound error--%>
@@ -81,7 +92,7 @@
 </html>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function(){
+    document.addEventListener("DOMContentLoaded", function () {
 
         el_autohide = document.querySelector('.autohide');
 
@@ -89,15 +100,14 @@
         navbar_height = document.querySelector('.navbar').offsetHeight;
         document.body.style.paddingTop = 0;
 
-        if(el_autohide){
+        if (el_autohide) {
             var last_scroll_top = 0;
-            window.addEventListener('scroll', function() {
+            window.addEventListener('scroll', function () {
                 let scroll_top = window.scrollY;
-                if(scroll_top < last_scroll_top) {
+                if (scroll_top < last_scroll_top) {
                     el_autohide.classList.remove('scrolled-down');
                     el_autohide.classList.add('scrolled-up');
-                }
-                else {
+                } else {
                     el_autohide.classList.remove('scrolled-up');
                     el_autohide.classList.add('scrolled-down');
                 }

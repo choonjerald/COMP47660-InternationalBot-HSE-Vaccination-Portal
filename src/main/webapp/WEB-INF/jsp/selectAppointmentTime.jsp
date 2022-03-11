@@ -16,24 +16,25 @@
 </style>
 <body>
 <div class="container">
+    <br>
     <h1> Book an Appointment</h1>
-    <h2> Select Appointment Time</h2>
     <div class="card">
         <div class="card-body">
-            <table class="center">
+            <h2> Select Appointment Time</h2>
+            <table class="table">
                 <tr>
-                    <th>Date</th>
-                    <th>Time</th>
-                    <th>Type</th>
-                    <th></th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Time</th>
+                    <th scope="col">Type</th>
+                    <th scope="col"></th>
                 </tr>
                 <c:forEach var="appointment" items="${listAppointments}">
                     <tr>
-                        <td><c:out value="${appointment.date}" /></td>
-                        <td><c:out value="${appointment.time}" /></td>
-                        <td><c:out value="${appointment.appointmentType}" /></td>
+                        <td><c:out value="${appointment.date}"/></td>
+                        <td><c:out value="${appointment.time}"/></td>
+                        <td><c:out value="${appointment.appointmentType}"/></td>
                         <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <a href="/bookAppointment/${appointment.id}"  />Book</a>
+                            <a href="/bookAppointment/${appointment.id}"/>Book</a>
                         </td>
                     </tr>
                 </c:forEach>

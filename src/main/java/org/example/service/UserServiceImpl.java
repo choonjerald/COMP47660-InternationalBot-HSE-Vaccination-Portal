@@ -1,16 +1,11 @@
 package org.example.service;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.stream.Collectors;
-
 import org.example.dto.UserRegistrationDto;
 import org.example.exception.EmailNotFoundException;
 import org.example.exception.UserAlreadyExistException;
 import org.example.model.Role;
 import org.example.model.User;
 import org.example.repository.UserRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -18,6 +13,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -44,7 +43,7 @@ public class UserServiceImpl implements UserService {
 
         //Let's check if user already registered with us, if not proceed with saving new user
         try {
-            if(checkIfUserExist(user.getEmail())){
+            if (checkIfUserExist(user.getEmail())) {
                 throw new UserAlreadyExistException("User already exists for this email");
             }
         } catch (EmailNotFoundException e) {

@@ -6,14 +6,13 @@ import org.example.model.User;
 import org.example.repository.AppointmentRepository;
 import org.example.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.ui.Model;
 
 import java.util.List;
 
@@ -35,11 +34,11 @@ public class MainController {
         System.out.println(role);
 
         String target = "welcome";
-        if(role.contains("USER")) {
+        if (role.contains("USER")) {
             // Get the principal of logged in user
             Object principal = auth.getPrincipal();
             if (principal instanceof UserDetails) {
-                String userEmail = ((UserDetails)principal).getUsername();
+                String userEmail = ((UserDetails) principal).getUsername();
                 User user = userRepository.findByEmail(userEmail);
                 model.addAttribute("user", user);
             } else {
@@ -47,7 +46,7 @@ public class MainController {
             }
             target = "redirect:/user/home";
 
-        } else if(role.contains("ADMIN")) {
+        } else if (role.contains("ADMIN")) {
             List<Appointment> appointments = appointmentRepository.findAllBookedAppointments();
             model.addAttribute("appointments", appointments);
             target = "redirect:/admin/home";

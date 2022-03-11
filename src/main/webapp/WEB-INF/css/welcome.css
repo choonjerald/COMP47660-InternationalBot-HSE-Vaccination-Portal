@@ -9,7 +9,7 @@ body {
     padding-bottom: 30px
 }
 
-@media (min-width:768px) {
+@media (min-width: 768px) {
     .header-blue {
         padding-bottom: 30px
     }
@@ -25,7 +25,7 @@ body {
     border: none
 }
 
-@media (min-width:768px) {
+@media (min-width: 768px) {
     .header-blue .navbar {
         padding-top: 1rem;
         padding-bottom: 1rem
@@ -46,7 +46,7 @@ body {
     margin-top: .5rem
 }
 
-@media (min-width:768px) {
+@media (min-width: 768px) {
     .header-blue .navbar .navbar-collapse {
         border-color: transparent;
         margin: 0
@@ -112,7 +112,7 @@ body {
     text-align: center
 }
 
-@media (min-width:768px) {
+@media (min-width: 768px) {
     .header-blue .hero {
         margin-top: 60px;
         text-align: left
@@ -128,7 +128,7 @@ body {
     line-height: 1.4
 }
 
-@media (min-width:992px) {
+@media (min-width: 992px) {
     .header-blue .hero h1 {
         margin-top: 50px;
         margin-bottom: 24px;
