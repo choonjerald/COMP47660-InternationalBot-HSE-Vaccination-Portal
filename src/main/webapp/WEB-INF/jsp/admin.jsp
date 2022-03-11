@@ -14,6 +14,20 @@
         transform: translateY(0);
         transition: all 0.3s ease-in-out;
     }
+
+    .Qtable th, td {
+        text-align: left;
+        max-width: 300px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    #answer {
+        width: 300px;
+    }
+    #title {
+        max-width: 200px;
+    }
 </style>
 <html>
 <head>
@@ -76,6 +90,41 @@
                                 <a href="/viewAppointment/${appointment.id}"/> View</a>
                             </td>
                         </tr>
+                    </c:forEach>
+                </table>
+            </div>
+        </div>
+
+        <h3>Unanswered Questions</h3>
+        <div class="card">
+            <div class="card-body">
+                <table class="table">
+                    <tr>
+                        <th scope="col">Title</th>
+                        <th scope="col">Details</th>
+                        <th scope="col">Status</th>
+                        <th scope="col"></th>
+                    </tr>
+                    <c:forEach var="question" items="${adminQList}">
+                    <tr>
+                        <c:set var = "status" scope = "session" value = "${question.status}"/>
+                        <c:if test = "${status == false}">
+                            <td id="title"><c:out value="${question.title} " /></td>
+                            <td><c:out value="${question.details} " /></td>
+                            <c:set var = "status" scope = "session" value = "${question.status}"/>
+                            <c:if test = "${status == false}">
+                                <td><c:out value="Not Answered" /></td>
+                            </c:if>
+                            <c:if test = "${status == true}">
+                                <td><c:out value="Answered" /></td>
+                            </c:if>
+                            <td>
+                                <form method="get" action="/admin/faq/edit/${question.id}">
+                                    <button class="btn btn-primary" type="submit">Edit</button>
+                                </form>
+                            </td>
+                        </c:if>
+                    </tr>
                     </c:forEach>
                 </table>
             </div>

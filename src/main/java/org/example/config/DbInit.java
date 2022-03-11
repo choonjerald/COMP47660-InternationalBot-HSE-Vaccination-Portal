@@ -39,10 +39,18 @@ public class DbInit {
 
         Question question = new Question();
         question.setTitle("Side effects");
-        question.setDetails("If I get either one of the vaccine, what side effects will there be?");
+        question.setDetails("If I get either one of the vaccine, what side effects will there be?If I get either one of the vaccine, what side effects will there be?If I get either one of the vaccine, what side effects will there be?");
         question.setId(0L);
 
+//        Question question2 = new Question();
+//        question2.setTitle("Recovery time");
+//        question2.setDetails("If I get some side effects, how long will it take to recover?");
+//        question2.setId(1L);
+//        question2.setAnswers("All side effects should be gone within 3 days");
+//        question2.setStatus(true);
+
         questionRepository.save(question);
+//        questionRepository.save(question2);
         userRepository.save(admin);
     }
 }

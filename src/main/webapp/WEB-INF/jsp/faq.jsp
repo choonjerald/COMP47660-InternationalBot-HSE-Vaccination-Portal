@@ -5,22 +5,12 @@
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <style>
     <%@include file="../css/home.css"%>
-    table, th, td {
-        border: 1px solid;
-        padding: 10px;
-    }
     th, td {
         text-align: left;
         max-width: 300px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-    }
-    #answer {
-        width: 300px;
-    }
-    #title {
-        max-width: 200px;
     }
 </style>
 <html>
@@ -35,7 +25,6 @@
 
             <div id="navbarSupportedContent" class="collapse navbar-collapse">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active"><a href="/user/home" class="nav-link text-uppercase font-weight-bold">Home<span class="sr-only">(current)</span></a></li>
                     <li class="nav-item"><a href="/faq/create" class="nav-link text-uppercase font-weight-bold">Create New</a></li>
                 </ul>
             </div>
@@ -43,30 +32,37 @@
     </nav>
 </header>
 
-<!-- Body -->
 <div class="container">
     <div class="pt-5 text-white">
         <header class="py-5 mt-5">
             <h1 class = "display-4">See some already asked questions!</h1>
         </header>
-<%--        <h3>Your Booked Appointments</h3>--%>
         <div class="card">
             <div class="card-body">
-                <table class="center">
+                <table class="table">
                     <tr>
-                        <th>Title </th>
-                        <th>Details </th>
-                        <th>Answer </th>
-                        <th>Status</th>
+                        <th scope="col">Title </th>
+                        <th scope="col">Details </th>
+                        <th scope="col">Answer </th>
+                        <th scope="col">Status</th>
+                        <th scope="col"></th>
                     </tr>
                     <c:forEach var="question" items="${questionList}">
                         <tr>
-                            <td id="title"><c:out value="${question.title} " /></td>
+                            <td><c:out value="${question.title} " /></td>
                             <td><c:out value="${question.details} " /></td>
-                            <td id="answer"><c:out value="${question.answers} " /></td>
-                            <td><c:out value="${question.status} " /></td>
+                            <td><c:out value="${question.answers} " /></td>
+                            <c:set var = "status" scope = "session" value = "${question.status}"/>
+                            <c:if test = "${status == false}">
+                            <td><c:out value="Not Answered" /></td>
+                            </c:if>
+                            <c:if test = "${status == true}">
+                                <td><c:out value="Answered" /></td>
+                            </c:if>
                             <td>
-                                <a href="/faq/view/${question.id}">view</a>
+                                <form method="get" action="/faq/view/${question.id}">
+                                    <button class="btn btn-primary" type="submit">View</button>
+                                </form>
                             </td>
                         </tr>
                     </c:forEach>

@@ -25,6 +25,7 @@ public class Question {
     @Size(max = 254, message = "Details is too long")
     private String details;
 
+    @Size(max = 254, message = "Details is too long")
     private String answers;
 
     private boolean status;
