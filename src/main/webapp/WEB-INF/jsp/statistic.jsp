@@ -40,6 +40,9 @@
     body{
         background: linear-gradient(45deg, #49a09d, #5f2c82);
     }
+    .vaccine-table th, td{
+        font-size: medium;
+    }
 </style>
 <html>
 <head>
@@ -87,27 +90,46 @@
 
         <div class="mt-5 text-center">
             <h1 class="text-white mb-5">Aggregated Statistics</h1>
-            <h1>${firstVaccinePfizerCount}</h1>
-            <h1>${secondVaccinePfizerCount}</h1>
-            <h1>${firstVaccineModernaCount}</h1>
-            <h1>${secondVaccineModernaCount}</h1>
 
-            <div class="container">
-                <table>
+            <div class="mt-5 text-center">
+                <div class="container">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Highest Vaccinated Nationality</th>
+                            <th>Highest Vaccinated Age Group</th>
+                            <th>Registered Males</th>
+                            <th>Registered Females</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>${mostCommonNationality}</td>
+                            <td>${mostCommonAgeGroup}</td>
+                            <td>${registeredMales}</td>
+                            <td>${registeredFemales}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="container mt-5">
+                <table class="vaccine-table">
                     <thead>
                     <tr>
-                        <th>Highest Vaccinated Nationality</th>
-                        <th>Highest Vaccinated Age Group</th>
-                        <th>Registered Males</th>
-                        <th>Registered Females</th>
+                        <th>First Pfizer Vaccine Count</th>
+                        <th>Second Pfizer Vaccine Count</th>
+                        <th>First Moderna Vaccine Count</th>
+                        <th>Second Moderna Vaccine Count</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr>
-                        <td>${mostCommonNationality}</td>
-                        <td>${mostCommonAgeGroup}</td>
-                        <td>${registeredMales}</td>
-                        <td>${registeredFemales}</td>
+                        <td>${firstVaccinePfizerCount}</td>
+                        <td>${secondVaccinePfizerCount}</td>
+                        <td>${firstVaccineModernaCount}</td>
+                        <td>${secondVaccineModernaCount}</td>
                     </tr>
                     </tbody>
                 </table>
