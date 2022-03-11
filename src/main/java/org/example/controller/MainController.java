@@ -61,8 +61,13 @@ public class MainController {
         return "accessDenied";
     }
 
-    @GetMapping("/")
+    @GetMapping("/statistic")
     public String getAggregatedData(Model model) throws EmailNotFoundException {
+        // Get the role of logged in user
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String role = auth.getAuthorities().toString();
+        model.addAttribute("role", role);
+
         List<User> userList = userRepository.findAll();
         model.addAttribute("userList", userList);
         model.addAttribute("mostCommonNationality", userRepository.getMostCommonNationality().get(0).split(",")[0]);
@@ -70,7 +75,7 @@ public class MainController {
         model.addAttribute("registeredMales", userRepository.getGenderCounts().get(0).split(",")[1]);
 //        model.addAttribute("registeredFemales", userRepository.getGenderCounts().get(1).split(",")[1]);
 
-        return viewWelcome(model);
+        return "/statistic";
     }
 
 }

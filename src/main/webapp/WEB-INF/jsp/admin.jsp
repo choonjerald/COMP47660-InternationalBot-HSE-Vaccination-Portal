@@ -6,7 +6,7 @@
 <style>
     <%@include file="../css/admin.css"%>
     .scrolled-down{
-        transform:translateY(-100%); transition: all 0.3s ease-in-out;
+        transform:translateY(0); transition: all 0.3s ease-in-out;
     }
     .scrolled-up{
         transform:translateY(0); transition: all 0.3s ease-in-out;
@@ -16,14 +16,14 @@
 <head>
     <title>Admin Home</title>
 </head>
-<header class="header">
+<header class="autohide header">
     <nav class="navbar navbar-expand-lg fixed-top py-3">
         <div class="container"><a href="/admin/home" class="navbar-brand text-uppercase font-weight-bold">HSE Vaccination</a>
             <button type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler navbar-toggler-right"><i class="fa fa-bars"></i></button>
 
             <div id="navbarSupportedContent" class="collapse navbar-collapse">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active"><a href="/" class="nav-link text-uppercase font-weight-bold">Home <span class="sr-only">(current)</span></a></li>
+                    <li class="nav-item"><a href="/statistic" class="nav-link text-uppercase font-weight-bold">Statistics <span class="sr-only">(current)</span></a></li>
                     <li class="nav-item"><a href="/logout" class="nav-link text-uppercase font-weight-bold">Logout</a></li>
                 </ul>
             </div>
@@ -83,7 +83,7 @@
 
         // add padding-top to bady (if necessary)
         navbar_height = document.querySelector('.navbar').offsetHeight;
-        document.body.style.paddingTop = navbar_height + 'px';
+        document.body.style.paddingTop = 0;
 
         if(el_autohide){
             var last_scroll_top = 0;

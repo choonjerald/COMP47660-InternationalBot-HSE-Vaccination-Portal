@@ -6,7 +6,7 @@
 <style>
     <%@include file="../css/home.css"%>
     .scrolled-down{
-        transform:translateY(-100%); transition: all 0.3s ease-in-out;
+        transform:translateY(0); transition: all 0.3s ease-in-out;
     }
     .scrolled-up{
         transform:translateY(0); transition: all 0.3s ease-in-out;
@@ -24,7 +24,7 @@
 
             <div id="navbarSupportedContent" class="collapse navbar-collapse">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active"><a href="#" class="nav-link text-uppercase font-weight-bold">Home<span class="sr-only">(current)</span></a></li>
+                    <li class="nav-item active"><a href="/statistic" class="nav-link text-uppercase font-weight-bold">Statistics<span class="sr-only">(current)</span></a></li>
                     <li class="nav-item"><a href="/selectVaccinationCentre/" class="nav-link text-uppercase font-weight-bold">Book Appointment</a></li>
                     <li class="nav-item"><a href="/logout" class="nav-link text-uppercase font-weight-bold">Logout</a></li>
                 </ul>
@@ -143,7 +143,7 @@
 
         // add padding-top to bady (if necessary)
         navbar_height = document.querySelector('.navbar').offsetHeight;
-        document.body.style.paddingTop = navbar_height + 'px';
+        document.body.style.paddingTop = 0;
 
         if(el_autohide){
             var last_scroll_top = 0;

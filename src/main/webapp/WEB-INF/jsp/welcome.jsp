@@ -3,15 +3,28 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<style><%@include file="../css/welcome.css"%></style>
+<style>
+    <%@include file="../css/welcome.css" %>
+</style>
 <html>
 <head>
     <title>Welcome</title>
 </head>
+
 <div class="header-blue">
     <nav class="navbar navbar-light navbar-expand-md navigation-clean-search">
         <div class="container-fluid"><a class="navbar-brand" href="/">HSE Vaccination</a></div>
-        <a class="btn btn-light action-button mr-2" role="button" href="/login">Log In</a> <a class="btn btn-light action-button" role="button" href="/registration">Signup</a>
+        <div id="navbarSupportedContent" class="collapse navbar-collapse">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active"><a href="/statistic"
+                                               class="nav-link text-uppercase font-weight-bold text-white">Statistics<span
+                        class="sr-only">(current)</span></a></li>
+                <li class="nav-item"><a href="/login"
+                                        class="nav-link text-uppercase font-weight-bold text-white">Login</a></li>
+                <li class="nav-item"><a href="/registration"
+                                        class="nav-link text-uppercase font-weight-bold text-white">Register</a></li>
+            </ul>
+        </div>
     </nav>
     <div class="container hero">
         <div class="row">
@@ -19,44 +32,21 @@
                 <h1>HSE Vaccination Portal</h1>
                 <p>The HSE provides public health and social care services to everyone living in Ireland
                     To fight the COVID pandemic, HSE is providing an online reservation system
-                    for citizens aged 18 years and over who would like to receive their first COVID vaccination (1st or 2nd dose).<br>
+                    for citizens aged 18 years and over who would like to receive their first COVID vaccination (1st or
+                    2nd dose).<br>
                 </p>
-                <a href="/registration" class="btn btn-light btn-lg action-button">Register an Account<i class="fa fa-long-arrow-right ml-2"></i></a>
+                <a href="/registration" class="btn btn-light btn-lg action-button">Register an Account<i
+                        class="fa fa-long-arrow-right ml-2"></i></a>
             </div>
             <div class="col-md-5 col-lg-5 offset-lg-1 offset-xl-0 d-none d-lg-block syringe-holder">
-                <div class="syringe-mockup"> <img class="syringe" src="https://www.pinclipart.com/picdir/big/80-803622_hypodermic-needle-medicine-syringe-clip-art-wheel-heraldry.png"> <!-- <div class="screen">	</div>	-->
+                <div class="syringe-mockup"><img class="syringe"
+                                                 src="https://www.pinclipart.com/picdir/big/80-803622_hypodermic-needle-medicine-syringe-clip-art-wheel-heraldry.png">
+                    <!-- <div class="screen">	</div>	-->
                 </div>
             </div>
         </div>
-        <div class="row">
-            <h1>Aggregated statistics</h1>
-        </div>
-
-        <div class="row">
-            <div class="column mr-5 ">
-                <h2>Highest Vaccined Nationality</h2>
-                <h3><c:out value="${mostCommonNationality}" /></h3>
-            </div>
-
-            <div class="column mr-5 ">
-                <h2>Highest Vaccined Age group</h2>
-                <h3><c:out value="${mostCommonAgeGroup}" /></h3>
-            </div>
-
-            <div class="column mr-5 ">
-                <h2>Registered Males</h2>
-                <h3><c:out value="${registeredMales}" /></h3>
-            </div>
-
-<%--            can fill db with initial female data to not through out of bound error--%>
-<%--            <div class="column mr-5 ">--%>
-<%--                <h2>Registered Females</h2>--%>
-<%--                <h3><c:out value="${registeredFemales}" /></h3>--%>
-<%--            </div>--%>
-
-        </div>
-
     </div>
+
 </div>
 
 </html>

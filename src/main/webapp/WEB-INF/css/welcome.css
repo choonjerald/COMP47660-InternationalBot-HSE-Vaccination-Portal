@@ -1,13 +1,17 @@
 .header-blue {
+
+    font-family: 'Source Sans Pro', sans-serif
+}
+
+body {
     background: linear-gradient(135deg, #184e8e, white);
     background-color: #ffb3c5;
-    padding-bottom: 80px;
-    font-family: 'Source Sans Pro', sans-serif
+    padding-bottom: 30px
 }
 
 @media (min-width:768px) {
     .header-blue {
-        padding-bottom: 120px
+        padding-bottom: 30px
     }
 }
 
@@ -126,7 +130,7 @@
 
 @media (min-width:992px) {
     .header-blue .hero h1 {
-        margin-top: 190px;
+        margin-top: 50px;
         margin-bottom: 24px;
         line-height: 1.2
     }
@@ -146,7 +150,7 @@
 .header-blue div.syringe-mockup {
     position: relative;
     max-width: 300px;
-    margin-top: 172px;
+    margin-top: 50px;
     display: inline-block
 }
 
