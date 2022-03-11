@@ -3,7 +3,15 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<style><%@include file="../css/admin.css"%></style>
+<style>
+    <%@include file="../css/admin.css"%>
+    .scrolled-down{
+        transform:translateY(-100%); transition: all 0.3s ease-in-out;
+    }
+    .scrolled-up{
+        transform:translateY(0); transition: all 0.3s ease-in-out;
+    }
+</style>
 <html>
 <head>
     <title>Admin Home</title>
@@ -15,10 +23,7 @@
 
             <div id="navbarSupportedContent" class="collapse navbar-collapse">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active"><a href="#" class="nav-link text-uppercase font-weight-bold">Home <span class="sr-only">(current)</span></a></li>
-                    <li class="nav-item"><a href="#" class="nav-link text-uppercase font-weight-bold">About</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link text-uppercase font-weight-bold">Gallery</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link text-uppercase font-weight-bold">Portfolio</a></li>
+                    <li class="nav-item active"><a href="/" class="nav-link text-uppercase font-weight-bold">Home <span class="sr-only">(current)</span></a></li>
                     <li class="nav-item"><a href="/logout" class="nav-link text-uppercase font-weight-bold">Logout</a></li>
                 </ul>
             </div>
@@ -70,3 +75,33 @@
 </div>
 
 </html>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+
+        el_autohide = document.querySelector('.autohide');
+
+        // add padding-top to bady (if necessary)
+        navbar_height = document.querySelector('.navbar').offsetHeight;
+        document.body.style.paddingTop = navbar_height + 'px';
+
+        if(el_autohide){
+            var last_scroll_top = 0;
+            window.addEventListener('scroll', function() {
+                let scroll_top = window.scrollY;
+                if(scroll_top < last_scroll_top) {
+                    el_autohide.classList.remove('scrolled-down');
+                    el_autohide.classList.add('scrolled-up');
+                }
+                else {
+                    el_autohide.classList.remove('scrolled-up');
+                    el_autohide.classList.add('scrolled-down');
+                }
+                last_scroll_top = scroll_top;
+            });
+            // window.addEventListener
+        }
+        // if
+
+    });
+</script>
