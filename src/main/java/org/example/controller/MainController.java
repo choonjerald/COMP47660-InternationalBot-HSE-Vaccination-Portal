@@ -38,7 +38,6 @@ public class MainController {
         if(role.contains("USER")) {
             // Get the principal of logged in user
             Object principal = auth.getPrincipal();
-
             if (principal instanceof UserDetails) {
                 String userEmail = ((UserDetails)principal).getUsername();
                 User user = userRepository.findByEmail(userEmail);
@@ -46,12 +45,12 @@ public class MainController {
             } else {
                 String userEmail = principal.toString();
             }
-            target = "home";
+            target = "redirect:/user/home";
 
         } else if(role.contains("ADMIN")) {
             List<Appointment> appointments = appointmentRepository.findAllBookedAppointments();
             model.addAttribute("appointments", appointments);
-            target = "admin";
+            target = "redirect:/admin/home";
         }
 
         return target;

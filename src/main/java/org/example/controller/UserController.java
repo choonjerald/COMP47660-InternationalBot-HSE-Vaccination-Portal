@@ -34,6 +34,12 @@ public class UserController {
             String userEmail = ((UserDetails)principal).getUsername();
             User user = userRepository.findByEmail(userEmail);
             model.addAttribute("user", user);
+            try{
+                Appointment userAppointment = appointmentRepository.findByUserId(user.getId());
+                model.addAttribute("userAppointment", userAppointment);
+            } catch (Exception e){
+                return "redirect:/logout";
+            }
         } else {
             String userEmail = principal.toString();
         }

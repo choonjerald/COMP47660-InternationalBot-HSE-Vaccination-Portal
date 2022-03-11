@@ -53,47 +53,67 @@
             <h4> Second Vaccine: <c:out value="${user.secondVaccine}" /></h4>
         </header>
 
-        <div class="py-5">
+        <div>
             <c:choose>
                 <c:when test="${user.firstVaccine != null && user.secondVaccine != null}">
                 </c:when>
+                <c:when test="${user.firstVaccine != null && user.secondVaccine == null}">
+                    <div class="py-5">
+                        <h4>Second Dose Appointment Booked</h4>
+                    </div>
+                </c:when>
+                <c:when test="${userAppointment != null}">
+                    <div class="py-5">
+                        <h4>First Dose Appointment Booked</h4>
+                    </div>
+                </c:when>
                 <c:otherwise>
-                    <a href="/selectVaccinationCentre/" class="btn btn-light btn-lg action-button">Book an Appointment<i class="fa fa-long-arrow-right ml-2"></i></a>
+                    <div class="py-5">
+                        <a href="/selectVaccinationCentre/" class="btn btn-light btn-lg action-button">Book an Appointment<i class="fa fa-long-arrow-right ml-2"></i></a>
+                    </div>
                 </c:otherwise>
             </c:choose>
         </div>
 
-        <h3>Your Booked Appointments</h3>
-        <div class="card">
-            <div class="card-body">
-                <table class="center">
-                    <tr>
-                        <th>Vaccination Centre </th>
-                        <th>Date </th>
-                        <th>Time </th>
-                        <th>Type </th>
-                        <th></th>
-                    </tr>
-                    <c:forEach var="appointment" items="${user.appointments}">
-                        <tr>
-                            <td><c:out value="${appointment.vaccinationCentre.name} " /></td>
-                            <td><c:out value="${appointment.date} " /></td>
-                            <td><c:out value="${appointment.time} " /></td>
-                            <td><c:out value="${appointment.appointmentType} " /></td>
-                            <td>
-                                <c:choose>
-                                    <c:when test="${appointment.appointmentType == 'First Dose'}">
-                                        <a href="/cancelAppointment/${appointment.id}"/>Cancel</a>
-                                    </c:when>
-                                    <c:otherwise>
-                                    </c:otherwise>
-                                </c:choose>
-                            </td>
-                        </tr>
-                    </c:forEach>
-                </table>
-            </div>
+        <div>
+            <c:choose>
+                <c:when test="${user.firstVaccine != null && user.secondVaccine != null}">
+                </c:when>
+                <c:otherwise>
+                    <h3>Your Booked Appointments</h3>
+                    <div class="card">
+                        <div class="card-body">
+                            <table class="center">
+                                <tr>
+                                    <th>Vaccination Centre </th>
+                                    <th>Date </th>
+                                    <th>Time </th>
+                                    <th>Type </th>
+                                    <th></th>
+                                </tr>
+                                <c:forEach var="appointment" items="${user.appointments}">
+                                    <tr>
+                                        <td><c:out value="${appointment.vaccinationCentre.name} " /></td>
+                                        <td><c:out value="${appointment.date} " /></td>
+                                        <td><c:out value="${appointment.time} " /></td>
+                                        <td><c:out value="${appointment.appointmentType} " /></td>
+                                        <td>
+                                            <c:choose>
+                                                <c:when test="${appointment.appointmentType == 'First Dose'}">
+                                                    <a href="/cancelAppointment/${appointment.id}"/>Cancel</a>
+                                                </c:when>
+                                                <c:otherwise>
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                            </table>
+                        </div>
+                    </div>                </c:otherwise>
+            </c:choose>
         </div>
+
         <br>
         <h3>Your Activity Log</h3>
         <div class="card">
