@@ -1,8 +1,13 @@
 package org.example.controller;
 
+import org.example.dto.UserRegistrationDto;
 import org.example.exception.EmailNotFoundException;
+import org.example.exception.UserAlreadyExistException;
 import org.example.model.Appointment;
+import org.example.model.Question;
 import org.example.model.User;
+import org.example.model.UserActivity;
+import org.example.repository.QuestionRepository;
 import org.example.repository.AppointmentRepository;
 import org.example.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +16,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 
 @Controller

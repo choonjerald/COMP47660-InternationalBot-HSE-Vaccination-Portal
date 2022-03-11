@@ -19,6 +19,8 @@
                 <li class="nav-item active"><a href="/statistic"
                                                class="nav-link text-uppercase font-weight-bold text-white">Statistics<span
                         class="sr-only">(current)</span></a></li>
+                <li class="nav-item"><a href="/faq"
+                                        class="nav-link text-uppercase font-weight-bold text-white">FAQ</a></li>
                 <li class="nav-item"><a href="/login"
                                         class="nav-link text-uppercase font-weight-bold text-white">Login</a></li>
                 <li class="nav-item"><a href="/registration"
@@ -45,8 +47,8 @@
                 </div>
             </div>
         </div>
-    </div>
 
+    </div>
 </div>
 
 </html>
