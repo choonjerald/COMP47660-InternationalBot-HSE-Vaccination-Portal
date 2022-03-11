@@ -42,7 +42,7 @@
 
 <div class="container">
     <div class="pt-5 text-white">
-        <h3 class="mt-5"> Quesion Information: </h3>
+        <h3 class="mt-5"> Question Information: </h3>
         <div class="card">
             <div class="card-body">
                 <table class="table">

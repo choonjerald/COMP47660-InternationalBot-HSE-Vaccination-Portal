@@ -39,6 +39,7 @@
         </header>
         <div class="card">
             <div class="card-body">
+                <a href="/faq/create" class="btn btn-dark btn-lg action-button float-right mb-4">Create New<i class="fa fa-long-arrow-right ml-2"></i></a>
                 <table class="table">
                     <tr>
                         <th scope="col">Title </th>
