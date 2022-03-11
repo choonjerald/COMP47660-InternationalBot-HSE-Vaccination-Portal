@@ -1,7 +1,9 @@
 package org.example.config;
 
+import org.example.model.Question;
 import org.example.model.Role;
 import org.example.model.User;
+import org.example.repository.QuestionRepository;
 import org.example.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -15,6 +17,9 @@ public class DbInit {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private QuestionRepository questionRepository;
 
     @PostConstruct
     public void postConstruct() {
@@ -32,6 +37,12 @@ public class DbInit {
         admin.setPassword(new BCryptPasswordEncoder().encode("admin"));
         admin.setRoles(Arrays.asList(new Role("ADMIN")));
 
+        Question question = new Question();
+        question.setTitle("Side effects");
+        question.setDetails("If I get either one of the vaccine, what side effects will there be?");
+        question.setId(0L);
+
+        questionRepository.save(question);
         userRepository.save(admin);
     }
 }

@@ -34,6 +34,7 @@
                             class="sr-only">(current)</span></a></li>
                     <li class="nav-item"><a href="/selectVaccinationCentre/"
                                             class="nav-link text-uppercase font-weight-bold">Book Appointment</a></li>
+                    <li class="nav-item"><a href="/faq" class="nav-link text-uppercase font-weight-bold">Visit FAQ</a></li>
                     <li class="nav-item"><a href="/logout" class="nav-link text-uppercase font-weight-bold">Logout</a>
                     </li>
                 </ul>
