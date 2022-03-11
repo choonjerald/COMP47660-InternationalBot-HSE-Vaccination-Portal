@@ -24,7 +24,7 @@ public class DbInit {
     @PostConstruct
     public void postConstruct() {
         User admin = new User();
-        admin.setId(0L);
+        admin.setId(1L);
         admin.setFirstName("Admin");
         admin.setSurname("Admin");
         admin.setEmail("admin@HSE.com");
@@ -42,15 +42,37 @@ public class DbInit {
         question.setDetails("If I get either one of the vaccine, what side effects will there be?If I get either one of the vaccine, what side effects will there be?If I get either one of the vaccine, what side effects will there be?");
         question.setId(0L);
 
-//        Question question2 = new Question();
-//        question2.setTitle("Recovery time");
-//        question2.setDetails("If I get some side effects, how long will it take to recover?");
-//        question2.setId(1L);
-//        question2.setAnswers("All side effects should be gone within 3 days");
-//        question2.setStatus(true);
+        User user1 = new User();
+        user1.setId(2L);
+        user1.setFirstName("1");
+        user1.setSurname("1");
+        user1.setEmail("1@HSE.com");
+        user1.setSex("male");
+        user1.setAddress("user1");
+        user1.setDOB("1999-03-08");
+        user1.setNationality("Malaysian");
+        user1.setPhone("323456789");
+        user1.setPPS("2234567AB");
+        user1.setPassword(new BCryptPasswordEncoder().encode("p"));
+        user1.setRoles(Arrays.asList(new Role("USER")));
+
+        User user2 = new User();
+        user2.setId(3L);
+        user2.setFirstName("2");
+        user2.setSurname("2");
+        user2.setEmail("2@HSE.com");
+        user2.setSex("male");
+        user2.setAddress("user2");
+        user2.setDOB("1999-03-08");
+        user2.setNationality("Malaysian");
+        user2.setPhone("323456789");
+        user2.setPPS("3234567AB");
+        user2.setPassword(new BCryptPasswordEncoder().encode("p"));
+        user2.setRoles(Arrays.asList(new Role("USER")));
 
         questionRepository.save(question);
-//        questionRepository.save(question2);
         userRepository.save(admin);
+        userRepository.save(user1);
+        userRepository.save(user2);
     }
 }
