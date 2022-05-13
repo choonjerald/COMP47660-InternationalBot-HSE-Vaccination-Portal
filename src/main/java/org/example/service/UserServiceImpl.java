@@ -24,7 +24,7 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+    private BCryptPasswordEncoder encoder;
 
 
     public UserServiceImpl(UserRepository userRepository) {
@@ -39,8 +39,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User save(UserRegistrationDto registrationDto) throws UserAlreadyExistException {
         User user = new User(registrationDto.getFirstName(),
-                registrationDto.getSurname(), registrationDto.getDOB(), registrationDto.getAgeGroup(), registrationDto.getSex(), registrationDto.getPPS(), registrationDto.getAddress(), registrationDto.getPhone(), registrationDto.getEmail(), registrationDto.getNationality(),
-                passwordEncoder.encode(registrationDto.getPassword()), Arrays.asList(new Role("USER")));
+                registrationDto.getSurname(), encoder.encode(registrationDto.getDOB()),
+                registrationDto.getAgeGroup(), registrationDto.getSex(), encoder.encode(registrationDto.getPPS()),
+                encoder.encode(registrationDto.getAddress()), encoder.encode(registrationDto.getPhone()),
+                registrationDto.getEmail(), registrationDto.getNationality(),
+                encoder.encode(registrationDto.getPassword()), Arrays.asList(new Role("USER")));
 
         //Let's check if user already registered with us, if not proceed with saving new user
         try {
