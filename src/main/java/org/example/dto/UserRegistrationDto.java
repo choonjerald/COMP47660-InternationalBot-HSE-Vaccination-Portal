@@ -1,6 +1,7 @@
 package org.example.dto;
 
 import org.example.constraint.CheckAge;
+import org.example.constraint.ValidPassword;
 
 import javax.validation.GroupSequence;
 import javax.validation.constraints.NotBlank;
@@ -39,6 +40,7 @@ public class UserRegistrationDto {
     @NotBlank(message = "Nationality is required")
     private String nationality;
     @NotBlank(message = "Password is required")
+    @ValidPassword
     private String password;
 
     public UserRegistrationDto() {
