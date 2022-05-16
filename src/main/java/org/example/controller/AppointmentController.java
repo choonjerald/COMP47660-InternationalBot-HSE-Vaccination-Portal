@@ -20,10 +20,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 @Controller
 public class AppointmentController {
@@ -39,6 +40,8 @@ public class AppointmentController {
 
     @Autowired
     VaccinationCentreRepository vaccinationCentreRepository;
+
+    private static final Logger logger = LogManager.getLogger(AdminController.class);
 
     @RequestMapping({"/selectVaccinationCentre"})
     public String selectVaccinationCentre(Model model) throws EmailNotFoundException {
@@ -179,6 +182,7 @@ public class AppointmentController {
             model.addAttribute("user", user);
 
             target = "appointmentView";
+            logger.info("Appointment: " + appointment.getId() + " was accessed by: " + auth.getName());
         }
         return target;
     }
@@ -212,6 +216,8 @@ public class AppointmentController {
 
                 activityMessage = "Second dose appointment booked at " + appointment.getVaccinationCentre().getName() + " on " + appointment.getDate() + " at " + appointment.getTime() + ".";
                 userActivityRepository.save(new UserActivity(LocalDateTime.now(), activityMessage, user));
+
+                logger.info("Vaccination record for user: " + user.getId() + " was updated by: " + auth.getName());
             } else if (user.getFirstVaccine() != null) {
                 if (vaccine.equals("pfizer")) user.setSecondVaccine("Pfizer");
                 else if (vaccine.equals("moderna")) user.setSecondVaccine("Moderna");
@@ -227,6 +233,8 @@ public class AppointmentController {
 
                 activityMessage = "Patient is fully vaccinated";
                 userActivityRepository.save(new UserActivity(LocalDateTime.now(), activityMessage, user));
+
+                logger.info("Vaccination record for user: " + user.getId() + " was updated by: " + auth.getName());
             }
 
             model.addAttribute("user", user);

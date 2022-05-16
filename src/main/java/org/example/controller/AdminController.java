@@ -1,5 +1,6 @@
 package org.example.controller;
 
+import org.example.config.AuthenticationEventListener;
 import org.example.exception.QuestionNotFoundException;
 import org.example.model.Appointment;
 import org.example.model.Question;
@@ -13,6 +14,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
@@ -25,6 +28,8 @@ public class AdminController {
     @Autowired
     QuestionRepository questionRepository;
 
+    private static final Logger logger = LogManager.getLogger(AdminController.class);
+
     @RequestMapping({"/home"})
     public String viewHomePage(Model model) {
         // Get the role of logged in user
@@ -36,6 +41,7 @@ public class AdminController {
             model.addAttribute("appointments", appointments);
             List<Question> questionList = questionRepository.findAll();
             model.addAttribute("adminQList", questionList);
+            logger.info("Admin accessed by: " + auth.getName());
         }
 
         return "admin";

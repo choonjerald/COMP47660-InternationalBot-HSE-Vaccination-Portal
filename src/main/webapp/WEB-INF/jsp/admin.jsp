@@ -72,7 +72,6 @@
                         <th scope="col">Time</th>
                         <th scope="col">Name</th>
                         <th scope="col">Surname</th>
-                        <th scope="col">PPS</th>
                         <th scope="col">Type</th>
                         <th scope="col"></th>
                     </tr>
@@ -83,7 +82,6 @@
                             <td><c:out value="${appointment.time} "/></td>
                             <td><c:out value="${appointment.user.firstName} "/></td>
                             <td><c:out value="${appointment.user.surname} "/></td>
-                            <td><c:out value="${appointment.user.PPS} "/></td>
                             <td><c:out value="${appointment.appointmentType} "/></td>
                             <td>
                                 <a class="btn btn-primary" href="/viewAppointment/${appointment.id}"/> View</a>
