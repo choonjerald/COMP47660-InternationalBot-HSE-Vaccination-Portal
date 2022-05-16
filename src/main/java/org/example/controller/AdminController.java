@@ -60,7 +60,7 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/faq/edit/{id}", method = RequestMethod.POST)
-    public String registerUserAccount(@Validated @ModelAttribute("displayQuestion") Question postedQuestion, BindingResult result, Model model) throws QuestionNotFoundException {
+    public String registerAdminAnswer(@Validated @ModelAttribute("displayQuestion") Question postedQuestion, BindingResult result, Model model) throws QuestionNotFoundException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String role = auth.getAuthorities().toString();
 

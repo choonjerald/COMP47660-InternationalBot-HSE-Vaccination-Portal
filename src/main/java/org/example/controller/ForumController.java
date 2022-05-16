@@ -2,6 +2,7 @@ package org.example.controller;
 
 import org.example.exception.EmailNotFoundException;
 import org.example.exception.QuestionNotFoundException;
+import org.example.model.Appointment;
 import org.example.model.Question;
 import org.example.model.User;
 import org.example.model.UserActivity;
@@ -34,11 +35,17 @@ public class ForumController {
     UserActivityRepository userActivityRepository;
 
     @GetMapping("/create")
-    public String getForumPage() { return "forum"; }
+    public String getForumPage() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String role = auth.getAuthorities().toString();
+        if (role.contains("USER")) {
+            return "forum";
+        }
+        return "redirect:/login";
+    }
 
     @PostMapping("/create")
-    public String registerUserAccount(@Validated @ModelAttribute("question") Question postedQuestion, BindingResult result) {
-
+    public String registerUserQuestion(@Validated @ModelAttribute("question") Question postedQuestion, BindingResult result) {
         if (result.hasErrors()) {
             return getForumPage();
         }
