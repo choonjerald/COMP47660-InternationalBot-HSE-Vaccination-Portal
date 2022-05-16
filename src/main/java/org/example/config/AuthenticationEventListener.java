@@ -1,4 +1,4 @@
-package org.example.component;
+package org.example.config;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
