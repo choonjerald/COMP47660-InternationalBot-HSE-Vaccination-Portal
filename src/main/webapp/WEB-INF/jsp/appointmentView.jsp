@@ -50,36 +50,12 @@
                     <td><c:out value="${user.surname}"/></td>
                 </tr>
                 <tr>
-                    <th>Date of Birth:</th>
-                    <td><c:out value="${user.DOB}"/></td>
-                </tr>
-                <tr>
                     <th>Age Group:</th>
                     <td><c:out value="${user.ageGroup}"/></td>
                 </tr>
                 <tr>
                     <th>Sex:</th>
                     <td><c:out value="${user.sex}"/></td>
-                </tr>
-                <tr>
-                    <th>PPS:</th>
-                    <td><c:out value="${user.PPS}"/></td>
-                </tr>
-                <tr>
-                    <th>Address:</th>
-                    <td><c:out value="${user.address}"/></td>
-                </tr>
-                <tr>
-                    <th>Phone Number:</th>
-                    <td><c:out value="${user.phone}"/></td>
-                </tr>
-                <tr>
-                    <th>Email:</th>
-                    <td><c:out value="${user.email}"/></td>
-                </tr>
-                <tr>
-                    <th>Nationality:</th>
-                    <td><c:out value="${user.nationality}"/></td>
                 </tr>
                 <tr>
                     <th>First Dose:</th>

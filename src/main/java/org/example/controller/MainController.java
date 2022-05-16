@@ -31,7 +31,6 @@ public class MainController {
         // Get the role of logged in user
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String role = auth.getAuthorities().toString();
-        System.out.println(role);
 
         String target = "welcome";
         if (role.contains("USER")) {
