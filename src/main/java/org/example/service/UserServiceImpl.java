@@ -38,6 +38,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User save(UserRegistrationDto registrationDto) throws UserAlreadyExistException {
+        if (registrationDto.getNationality().matches("^[^a-zA-Z\\s-]+$")) {
+            registrationDto.setNationality("Undefined");
+        }
+
         User user = new User(registrationDto.getFirstName(),
                 registrationDto.getSurname(), encoder.encode(registrationDto.getDOB()),
                 registrationDto.getAgeGroup(), registrationDto.getSex(), encoder.encode(registrationDto.getPPS()),

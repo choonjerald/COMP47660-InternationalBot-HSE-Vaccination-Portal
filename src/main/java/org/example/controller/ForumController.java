@@ -43,8 +43,11 @@ public class ForumController {
             return getForumPage();
         }
         try {
-            postedQuestion.setStatus(false);
-            questionRepository.save(postedQuestion);
+            Question cleanedQuestion = new Question();
+            cleanedQuestion.setStatus(false);
+            cleanedQuestion.setTitle(postedQuestion.getTitle().replaceAll("[^\\w\\s,.?-]", ""));
+            cleanedQuestion.setDetails(postedQuestion.getDetails().replaceAll("[^\\w\\s,.?-]", ""));
+            questionRepository.save(cleanedQuestion);
 
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             String role = auth.getAuthorities().toString();
@@ -58,7 +61,7 @@ public class ForumController {
                     User user = userRepository.findByEmail(userEmail);
 
                     //log user activity
-                    String activityMessage = "Posted question with title \"" + postedQuestion.getTitle() + "\" in forum.";
+                    String activityMessage = "Posted question with title \"" + cleanedQuestion.getTitle() + "\" in forum.";
                     userActivityRepository.save(new UserActivity(LocalDateTime.now(), activityMessage, user));
                 }
             }

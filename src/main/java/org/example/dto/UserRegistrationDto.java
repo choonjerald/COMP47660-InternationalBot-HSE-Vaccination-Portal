@@ -17,8 +17,10 @@ import java.util.Date;
 
 public class UserRegistrationDto {
     @NotBlank(message = "First Name is required")
+    @Pattern(regexp = "^[a-zA-Z\\s-]+$", message = "Firstname must not contain Special Characters", groups = Extended.class)
     private String firstName;
     @NotBlank(message = "Surname is required")
+    @Pattern(regexp = "^[a-zA-Z\\s-]+$", message = "Surname must not contain Special Character, spaces allowed", groups = Extended.class)
     private String surname;
     @NotEmpty(message = "Date of Birth is required")
     @CheckAge(groups = Extended.class)
