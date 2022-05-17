@@ -48,16 +48,16 @@ public class ForumController {
             return getForumPage();
         }
         try {
-            Question cleanedQuestion = new Question();
-            cleanedQuestion.setStatus(false);
-            cleanedQuestion.setTitle(postedQuestion.getTitle().replaceAll("[^\\w\\s,.?-]", ""));
-            cleanedQuestion.setDetails(postedQuestion.getDetails().replaceAll("[^\\w\\s,.?-]", ""));
-            questionRepository.save(cleanedQuestion);
-
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             String role = auth.getAuthorities().toString();
 
             if (role.contains("USER")) {
+                Question cleanedQuestion = new Question();
+                cleanedQuestion.setStatus(false);
+                cleanedQuestion.setTitle(postedQuestion.getTitle().replaceAll("[^\\w\\s,.?-]", ""));
+                cleanedQuestion.setDetails(postedQuestion.getDetails().replaceAll("[^\\w\\s,.?-]", ""));
+                questionRepository.save(cleanedQuestion);
+                
                 // Get the principal of logged in user
                 Object principal = auth.getPrincipal();
 
