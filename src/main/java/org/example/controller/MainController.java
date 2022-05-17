@@ -83,7 +83,7 @@ public class MainController {
         if (user.size() > 1) {
             try {
                 return user.get(1).split(",")[1];
-            } catch (IndexOutOfBoundsException e){
+            } catch (IndexOutOfBoundsException e) {
                 System.out.println(e);
             }
         }

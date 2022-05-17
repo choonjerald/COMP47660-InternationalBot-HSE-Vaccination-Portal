@@ -9,12 +9,15 @@
         text-align: left;
         max-width: 60%;
     }
+
     tr {
         margin-bottom: 20px;
     }
+
     textarea {
         resize: none;
     }
+
     header {
         margin-bottom: 30px;
     }
@@ -28,11 +31,14 @@
 <header class="header">
     <nav class="navbar navbar-expand-lg fixed-top py-3">
         <div class="container"><a href="/" class="navbar-brand text-uppercase font-weight-bold">HSE Vaccination</a>
-            <button type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler navbar-toggler-right"><i class="fa fa-bars"></i></button>
+            <button type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+                    class="navbar-toggler navbar-toggler-right"><i class="fa fa-bars"></i></button>
 
             <div id="navbarSupportedContent" class="collapse navbar-collapse">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item"><a href="/faq/create" class="nav-link text-uppercase font-weight-bold">Create New</a></li>
+                    <li class="nav-item"><a href="/faq/create" class="nav-link text-uppercase font-weight-bold">Create
+                        New</a></li>
                 </ul>
             </div>
         </div>
@@ -46,29 +52,29 @@
         <div class="card">
             <div class="card-body">
                 <table class="table">
-                <tr>
-                    <th>Title: </th>
-                    <td><c:out value="${displayQuestion.title} " /></td>
-                </tr>
-                <tr>
-                    <th>Details: </th>
-                    <td><c:out value="${displayQuestion.details} " /></td>
+                    <tr>
+                        <th>Title:</th>
+                        <td><c:out value="${displayQuestion.title} "/></td>
+                    </tr>
+                    <tr>
+                        <th>Details:</th>
+                        <td><c:out value="${displayQuestion.details} "/></td>
 
-                </tr>
-                <tr>
-                    <th>Answer: </th>
-                    <td><c:out value="${displayQuestion.answers} " /></td>
-                </tr>
-                <tr>
-                    <th>Status: </th>
-                    <c:set var = "status" scope = "session" value = "${displayQuestion.status}"/>
-                    <c:if test = "${status == false}">
-                        <td><c:out value="Not Answered" /></td>
-                    </c:if>
-                    <c:if test = "${status == true}">
-                        <td><c:out value="Answered" /></td>
-                    </c:if>
-                </tr>
+                    </tr>
+                    <tr>
+                        <th>Answer:</th>
+                        <td><c:out value="${displayQuestion.answers} "/></td>
+                    </tr>
+                    <tr>
+                        <th>Status:</th>
+                        <c:set var="status" scope="session" value="${displayQuestion.status}"/>
+                        <c:if test="${status == false}">
+                            <td><c:out value="Not Answered"/></td>
+                        </c:if>
+                        <c:if test="${status == true}">
+                            <td><c:out value="Answered"/></td>
+                        </c:if>
+                    </tr>
                 </table>
             </div>
         </div>

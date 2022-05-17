@@ -1,6 +1,8 @@
 package org.example.controller;
 
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.example.exception.AppointmentNotFoundException;
 import org.example.exception.EmailNotFoundException;
 import org.example.exception.UserNotFoundException;
@@ -20,28 +22,23 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 @Controller
 public class AppointmentController {
 
+    private static final Logger logger = LogManager.getLogger(AdminController.class);
     @Autowired
     AppointmentRepository appointmentRepository;
-
     @Autowired
     UserRepository userRepository;
-
     @Autowired
     UserActivityRepository userActivityRepository;
-
     @Autowired
     VaccinationCentreRepository vaccinationCentreRepository;
-
-    private static final Logger logger = LogManager.getLogger(AdminController.class);
 
     @RequestMapping({"/selectVaccinationCentre"})
     public String selectVaccinationCentre(Model model) throws EmailNotFoundException {

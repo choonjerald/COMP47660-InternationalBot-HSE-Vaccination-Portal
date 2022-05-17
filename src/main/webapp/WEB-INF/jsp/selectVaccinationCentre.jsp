@@ -26,7 +26,8 @@
                     <tr>
                         <td><c:out value="${vaccinationCentre.name}"/></td>
                         <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <a class="btn btn-primary" href="/selectAppointmentTime/${vaccinationCentre.id}"/>View Time Slots</a>
+                            <a class="btn btn-primary" href="/selectAppointmentTime/${vaccinationCentre.id}"/>View Time
+                            Slots</a>
                         </td>
                     </tr>
                 </c:forEach>

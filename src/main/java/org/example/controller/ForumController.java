@@ -1,8 +1,6 @@
 package org.example.controller;
 
-import org.example.exception.EmailNotFoundException;
 import org.example.exception.QuestionNotFoundException;
-import org.example.model.Appointment;
 import org.example.model.Question;
 import org.example.model.User;
 import org.example.model.UserActivity;
@@ -73,7 +71,7 @@ public class ForumController {
                 }
             }
 
-        }catch (Exception e){
+        } catch (Exception e) {
             return getForumPage();
         }
         return "redirect:/faq";

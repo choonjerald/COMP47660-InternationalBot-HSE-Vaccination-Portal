@@ -1,7 +1,9 @@
 package org.example.service;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.example.config.AuthenticationFailureListener;
 import org.example.dto.UserRegistrationDto;
-import org.example.exception.BlockedIPException;
 import org.example.exception.EmailNotFoundException;
 import org.example.exception.UserAlreadyExistException;
 import org.example.model.Role;
@@ -22,6 +24,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
+
+    private static final Logger logger = LogManager.getLogger(AuthenticationFailureListener.class);
 
     private UserRepository userRepository;
 
@@ -72,6 +76,7 @@ public class UserServiceImpl implements UserService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         String ip = getClientIP();
         if (loginAttemptService.isBlocked(ip)) {
+            logger.warn("IP address blocked: " + ip + " for username: " + email);
             throw new RuntimeException("blocked");
         }
 
@@ -93,7 +98,7 @@ public class UserServiceImpl implements UserService {
 
     private String getClientIP() {
         String xfHeader = request.getHeader("X-Forwarded-For");
-        if (xfHeader == null){
+        if (xfHeader == null) {
             return request.getRemoteAddr();
         }
         return xfHeader.split(",")[0];

@@ -16,11 +16,12 @@
         transform: translateY(0);
         transition: all 0.3s ease-in-out;
     }
+
     table {
         margin: 0 auto;
         border-collapse: collapse;
         overflow: hidden;
-        box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     }
 
     th, td {
@@ -30,17 +31,21 @@
         font-size: large;
         font-weight: bold;
     }
+
     td {
-        background-color: rgba(255,255,255,0.2);
+        background-color: rgba(255, 255, 255, 0.2);
     }
+
     th {
         background-color: #55608f;
         text-align: left;
     }
-    body{
+
+    body {
         background: linear-gradient(45deg, #49a09d, #5f2c82);
     }
-    .vaccine-table th, td{
+
+    .vaccine-table th, td {
         font-size: medium;
     }
 </style>
@@ -56,7 +61,8 @@
                 <c:choose>
                     <c:when test="${role == '[USER]' || role == '[ADMIN]'}">
                         <li class="nav-item"><a href="/logout"
-                                                class="nav-link text-uppercase font-weight-bold text-white">Logout</a></li>
+                                                class="nav-link text-uppercase font-weight-bold text-white">Logout</a>
+                        </li>
                     </c:when>
                     <c:otherwise>
                         <li class="nav-item"><a href="/login"

@@ -1,5 +1,7 @@
 package org.example.config;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.example.service.LoginAttemptService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
@@ -13,6 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 public class AuthenticationFailureListener implements
         ApplicationListener<AuthenticationFailureBadCredentialsEvent> {
 
+    private static final Logger logger = LogManager.getLogger(AuthenticationFailureListener.class);
+
     @Autowired
     private HttpServletRequest request;
 
@@ -25,10 +29,15 @@ public class AuthenticationFailureListener implements
     @Override
     public void onApplicationEvent(AuthenticationFailureBadCredentialsEvent e) {
         final String xfHeader = request.getHeader("X-Forwarded-For");
+        String ip;
         if (xfHeader == null) {
-            loginAttemptService.loginFailed(request.getRemoteAddr());
+            ip = request.getRemoteAddr();
+            loginAttemptService.loginFailed(ip);
         } else {
-            loginAttemptService.loginFailed(xfHeader.split(",")[0]);
+            ip = xfHeader.split(",")[0];
+            loginAttemptService.loginFailed(ip);
         }
+
+        logger.warn("**FAILED** Login attempt with username: " + e.getAuthentication().getName() + " for IP: " + ip);
     }
 }

@@ -22,9 +22,11 @@
         overflow: hidden;
         text-overflow: ellipsis;
     }
+
     #answer {
         width: 300px;
     }
+
     #title {
         max-width: 200px;
     }
@@ -44,8 +46,10 @@
             <div id="navbarSupportedContent" class="collapse navbar-collapse">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item"><a href="/faq" class="nav-link text-uppercase font-weight-bold">FAQ</a></li>
-                    <li class="nav-item"><a href="/statistic" class="nav-link text-uppercase font-weight-bold">Statistics</a></li>
-                    <li class="nav-item"><a href="/logout" class="nav-link text-uppercase font-weight-bold">Logout</a></li>
+                    <li class="nav-item"><a href="/statistic" class="nav-link text-uppercase font-weight-bold">Statistics</a>
+                    </li>
+                    <li class="nav-item"><a href="/logout" class="nav-link text-uppercase font-weight-bold">Logout</a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -103,25 +107,25 @@
                         <th scope="col"></th>
                     </tr>
                     <c:forEach var="question" items="${adminQList}">
-                    <tr>
-                        <c:set var = "status" scope = "session" value = "${question.status}"/>
-                        <c:if test = "${status == false}">
-                            <td id="title"><c:out value="${question.title} " /></td>
-                            <td><c:out value="${question.details} " /></td>
-                            <c:set var = "status" scope = "session" value = "${question.status}"/>
-                            <c:if test = "${status == false}">
-                                <td><c:out value="Not Answered" /></td>
+                        <tr>
+                            <c:set var="status" scope="session" value="${question.status}"/>
+                            <c:if test="${status == false}">
+                                <td id="title"><c:out value="${question.title} "/></td>
+                                <td><c:out value="${question.details} "/></td>
+                                <c:set var="status" scope="session" value="${question.status}"/>
+                                <c:if test="${status == false}">
+                                    <td><c:out value="Not Answered"/></td>
+                                </c:if>
+                                <c:if test="${status == true}">
+                                    <td><c:out value="Answered"/></td>
+                                </c:if>
+                                <td>
+                                    <form method="get" action="/admin/faq/edit/${question.id}">
+                                        <button class="btn btn-primary" type="submit">Edit</button>
+                                    </form>
+                                </td>
                             </c:if>
-                            <c:if test = "${status == true}">
-                                <td><c:out value="Answered" /></td>
-                            </c:if>
-                            <td>
-                                <form method="get" action="/admin/faq/edit/${question.id}">
-                                    <button class="btn btn-primary" type="submit">Edit</button>
-                                </form>
-                            </td>
-                        </c:if>
-                    </tr>
+                        </tr>
                     </c:forEach>
                 </table>
             </div>

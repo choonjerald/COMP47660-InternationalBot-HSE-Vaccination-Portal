@@ -13,6 +13,7 @@
         color: red;
         font-weight: bold;
     }
+
     textarea {
         resize: none;
         width: 373px;

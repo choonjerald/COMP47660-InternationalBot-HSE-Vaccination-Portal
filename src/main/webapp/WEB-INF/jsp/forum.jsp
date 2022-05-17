@@ -13,6 +13,7 @@
         color: red;
         font-weight: bold;
     }
+
     textarea {
         resize: none;
         width: 373px;
@@ -41,7 +42,7 @@
                     <label for="details" class="col-sm-2 col-form-label">Details: </label>
                     <div class="col-sm-5">
                         <textarea name="details" rows="5"
-                              value="<c:out value='${question.details}' />">
+                                  value="<c:out value='${question.details}' />">
                         </textarea>
                     </div>
                     <div class="col">
