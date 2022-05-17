@@ -16,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -26,6 +27,8 @@ public class AdminController {
     AppointmentRepository appointmentRepository;
     @Autowired
     QuestionRepository questionRepository;
+    @Autowired
+    private HttpServletRequest request;
 
     @RequestMapping({"/home"})
     public String viewHomePage(Model model) {
@@ -38,7 +41,7 @@ public class AdminController {
             model.addAttribute("appointments", appointments);
             List<Question> questionList = questionRepository.findAll();
             model.addAttribute("adminQList", questionList);
-            logger.info("Admin accessed by: " + auth.getName());
+            logger.info("Admin accessed by: " + auth.getName() + " IP: " + getClientIP());
         }
 
         return "admin";
@@ -76,5 +79,12 @@ public class AdminController {
         return "redirect:/admin/home";
     }
 
+    public String getClientIP() {
+        String xfHeader = request.getHeader("X-Forwarded-For");
+        if (xfHeader == null) {
+            return request.getRemoteAddr();
+        }
+        return xfHeader.split(",")[0];
+    }
 
 }

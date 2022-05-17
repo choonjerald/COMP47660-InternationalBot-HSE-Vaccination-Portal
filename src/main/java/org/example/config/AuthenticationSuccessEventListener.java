@@ -33,7 +33,6 @@ public class AuthenticationSuccessEventListener implements
             ip = xfHeader.split(",")[0];
             loginAttemptService.loginSucceeded(ip);
         }
-
         logger.info("**SUCCESS** Login attempt with username: " + e.getAuthentication().getName() + " for IP: " + ip);
     }
 }

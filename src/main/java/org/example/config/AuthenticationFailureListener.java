@@ -37,7 +37,6 @@ public class AuthenticationFailureListener implements
             ip = xfHeader.split(",")[0];
             loginAttemptService.loginFailed(ip);
         }
-
         logger.warn("**FAILED** Login attempt with username: " + e.getAuthentication().getName() + " for IP: " + ip);
     }
 }

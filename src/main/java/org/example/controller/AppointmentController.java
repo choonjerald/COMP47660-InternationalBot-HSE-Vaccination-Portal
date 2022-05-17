@@ -23,6 +23,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -39,6 +40,8 @@ public class AppointmentController {
     UserActivityRepository userActivityRepository;
     @Autowired
     VaccinationCentreRepository vaccinationCentreRepository;
+    @Autowired
+    private HttpServletRequest request;
 
     @RequestMapping({"/selectVaccinationCentre"})
     public String selectVaccinationCentre(Model model) throws EmailNotFoundException {
@@ -179,7 +182,7 @@ public class AppointmentController {
             model.addAttribute("user", user);
 
             target = "appointmentView";
-            logger.info("Appointment: " + appointment.getId() + " was accessed by: " + auth.getName());
+            logger.info("Appointment: " + appointment.getId() + " was accessed by: " + auth.getName() + " IP: " + getClientIP());
         }
         return target;
     }
@@ -214,7 +217,7 @@ public class AppointmentController {
                 activityMessage = "Second dose appointment booked at " + appointment.getVaccinationCentre().getName() + " on " + appointment.getDate() + " at " + appointment.getTime() + ".";
                 userActivityRepository.save(new UserActivity(LocalDateTime.now(), activityMessage, user));
 
-                logger.info("Vaccination record for user: " + user.getId() + " was updated by: " + auth.getName());
+                logger.info("Vaccination record for user: " + user.getId() + " was updated by: " + auth.getName() + " IP: " + getClientIP());
             } else if (user.getFirstVaccine() != null) {
                 if (vaccine.equals("pfizer")) user.setSecondVaccine("Pfizer");
                 else if (vaccine.equals("moderna")) user.setSecondVaccine("Moderna");
@@ -231,7 +234,7 @@ public class AppointmentController {
                 activityMessage = "Patient is fully vaccinated";
                 userActivityRepository.save(new UserActivity(LocalDateTime.now(), activityMessage, user));
 
-                logger.info("Vaccination record for user: " + user.getId() + " was updated by: " + auth.getName());
+                logger.info("Vaccination record for user: " + user.getId() + " was updated by: " + auth.getName() + " IP: " + getClientIP());
             }
 
             model.addAttribute("user", user);
@@ -239,5 +242,13 @@ public class AppointmentController {
             target = "redirect:/admin/home";
         }
         return target;
+    }
+
+    public String getClientIP() {
+        String xfHeader = request.getHeader("X-Forwarded-For");
+        if (xfHeader == null) {
+            return request.getRemoteAddr();
+        }
+        return xfHeader.split(",")[0];
     }
 }
