@@ -35,12 +35,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .exceptionHandling().accessDeniedPage("/accessDenied")
                 .and()
                 .formLogin()
-                    .permitAll()
-                    .defaultSuccessUrl("/", true)
+                .permitAll()
+                .defaultSuccessUrl("/", true)
                 .and()
                 .logout()
-                    .logoutSuccessUrl("/")
-                    .permitAll();
+                .deleteCookies("JSESSIONID", "remember-me")
+                .clearAuthentication(true)
+                .invalidateHttpSession(true)
+                .logoutSuccessUrl("/")
+                .permitAll();
     }
 
     @Bean
